@@ -1,0 +1,43 @@
+.text {
+    color: black;
+}
+
+@media (max-width: 767px) {
+    .text {
+        color: white !important;
+    }
+}
+
+.inputtext::placeholder {
+    color: black;
+}
+
+@media (max-width: 767px) {
+    .inputtext::placeholder {
+        color: white !important;
+    }
+}
+
+.select-dropdown {
+    background-color: transparent;
+}
+
+@media (max-width: 767px) {
+    .select-dropdown {
+        background-color: black !important;
+    }
+
+    .select-dropdown:focus {
+        background-color: black !important;
+    }
+}
+
+@media (min-width: 768px) {
+    .select-dropdown {
+        background-color: white !important;
+    }
+
+    .select-dropdown:focus {
+        background-color: white !important;
+    }
+}

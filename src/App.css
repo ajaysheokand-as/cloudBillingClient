@@ -1,0 +1,232 @@
+@import url('https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+   font-family: "Public Sans", sans-serif;
+}
+
+.bill-slip {
+   border: 1px solid #e2e8f0;
+   border-radius: 8px;
+   padding: 16px;
+   background-color: #f7fafc;
+}
+
+
+.bill-slip h2,
+.bill-slip h3 {
+   color: #2d3748;
+}
+
+.bill-slip p {
+   color: #4a5568;
+}
+
+.bill-slip .bill-items {
+   margin: 0;
+   padding: 0;
+   list-style: none;
+}
+
+.bill-slip .bill-items li {
+   padding: 4px 0;
+}
+
+.bill-slip .bill-total {
+   color: #2d3748;
+   font-weight: bold;
+   text-align: right;
+   margin-top: 16px;
+}
+
+
+.sidebar-item {
+   @apply relative overflow-hidden;
+}
+
+.sidebar-item::before {
+   @apply absolute bottom-[0px] right-0 h-[3px] bg-teal-600;
+   content: '';
+   width: 0;
+   transition: width 0.3s ease;
+}
+
+.sidebar-item:hover::before {
+   width: 100%;
+   left: 0;
+}
+
+.sidebar-item.active::before {
+   width: 100%;
+   left: 0;
+}
+
+.example::-webkit-scrollbar {
+   display: none;
+}
+
+.hn {
+   width: 600px;
+   overflow-x: scroll;
+
+}
+
+
+@media screen {
+
+   .address,
+   .thanks {
+      display: none;
+   }
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+   -webkit-appearance: none;
+   margin: 0;
+}
+
+input[type=number] {
+   -moz-appearance: textfield;
+}
+
+#timeline {
+   animation: grow 1s ease-in-out infinite alternate;
+}
+
+@keyframes grow {
+   from {
+      stroke-dasharray: 0 10;
+   }
+
+   to {
+      stroke-dasharray: 10 10;
+   }
+}
+
+.img {
+   background-image:
+      url('./assets/images/Register-bg.gif'),
+      url('./assets/images/Login-bg.gif');
+
+   background-repeat: no-repeat, no-repeat;
+
+   background-size: 80vh, 80vh;
+
+   background-position: top left, bottom right;
+
+   background-color: #f0f0f0;
+}
+
+@media (max-width: 768px) {
+   .img {
+      background-image: url('./assets/images/login-register-bg.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+   }
+}
+
+@media (max-width: 480px) {
+   .img {
+      background-size: cover;
+      background-position: center;
+   }
+}
+
+.img2 {
+   background-image:
+      url('./assets/images/Register-bg.gif'),
+      url('./assets/images/Login-bg.gif');
+
+   background-repeat: no-repeat, no-repeat;
+
+   background-size: 80vh, 80vh;
+
+   background-position: top left, bottom right;
+
+   background-color: #f0f0f0;
+}
+
+@media (max-width: 768px) {
+   .img2 {
+      background-image: url('./assets/images/login-register-bg.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+   }
+
+   .bill {
+      margin-top: 28px;
+      padding-bottom: 10px;
+   }
+}
+
+@media (max-width: 480px) {
+   .img2 {
+      background-size: cover;
+      background-position: center;
+   }
+}
+
+.register_background {
+   background-color: #18181a9c;
+}
+
+.blur {
+   filter: blur(3px);
+}
+
+.adminepanel {
+   border-radius: 45px;
+}
+
+::placeholder {
+   color: black !important;
+}
+
+.common_btn {
+   color: white;
+   background: blue;
+   border-radius: 5px;
+   padding: 12px 25px;
+   transition: all 0.3s ease-in-out;
+   border: 1px solid blue;
+   line-height: 21px;
+}
+
+.common_btn:focus,
+.common_btn:hover {
+   animation: pulse 0.7s;
+   -webkit-animation: pulse 0.7s;
+   box-shadow: 0 0 0 0.3em transparent;
+   color: blue !important;
+   background: transparent !important;
+   border: 1px solid blue !important;
+}
+
+@keyframes pulse {
+   0% {
+      box-shadow: 0 0 0 blue;
+   }
+}
+
+.modal-container {
+   max-height: 100vh;
+   overflow-y: auto;
+}
+
+.beta {
+   font-size: 10px;
+   top: 5px;
+   right: 4px;
+}
+
+/* .product_table {
+   padding-left: 20px;
+} */
+
+@media (max-width: 768) {
+   .product_table {
+      padding-left: 0px;
+   }
+}
