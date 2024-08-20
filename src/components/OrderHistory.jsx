@@ -121,8 +121,8 @@ const OrderHistory = () => {
 
    return (
       <div className="container py-3">
-         <div className="px-3 pt-2 pb-5 bg-gray-100">
-            <h1 className="text-3xl font-bold font-serif mt-2 text-center text-teal-600 bg-gray-200 py-2 px-6 rounded-full shadow-md">
+         <div className="px-3 pt-2 pb-5 bg-gray-100 h-screen">
+            <h1 className="text-3xl font-bold font-serif mt-2 text-center text-teal-600  py-2 px-6 ">
                Order History
             </h1>
             <div data-aos="fade-up">
@@ -139,16 +139,25 @@ const OrderHistory = () => {
                      <option>All Transactions</option>
                   </select>
                   <p className="text-lg font-semibold">
-                     Total Price: <span className="text-blue-600">₹ {totalPrice.toFixed(2)}</span>
+                     Total Price is: <span className="text-blue-600">₹ {totalPrice.toFixed(2)}</span>
                   </p>
                </div>
-
                <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start mt-4">
-
                   {/* Chart Section */}
-                  <div className="flex justify-center items-center h-[35vh] w-full lg:w-2/5 p-4 bg-white shadow-md rounded-lg">
+                  {filteredData.length === 0 ? (
+                     <div style={{ display: "none" }}>
+                        hii
+                     </div>
+                  ) : (
+                     <div className="flex justify-center items-center h-[35vh] w-full lg:w-2/5 p-4 bg-white shadow-md rounded-lg">
+                        <h1>THis is data chart</h1>
+                        <Line data={getChartData(filteredData)} />
+                     </div>
+                  )}
+
+                  {/* <div className="flex justify-center items-center h-[35vh] w-full lg:w-2/5 p-4 bg-white shadow-md rounded-lg">
                      <Line data={getChartData(filteredData)} />
-                  </div>
+                  </div> */}
 
                   {/* Table Section */}
                   <div className="w-full lg:w-3/5 px-4 max-md:px-0 mt-6 lg:mt-0">
