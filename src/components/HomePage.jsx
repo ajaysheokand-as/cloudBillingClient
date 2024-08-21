@@ -125,7 +125,6 @@ function HomePage() {
    const closeModal = () => {
       setIsBillModalOpen(false);
    };
-
    return (
       <div className="flex flex-col h-screen">
          <main className="flex flex-grow bg-gray-200 p-4">
