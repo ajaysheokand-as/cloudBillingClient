@@ -34,7 +34,6 @@ const SearchBar = ({
     try {
       if (!userId) return;
       const response = await axios.get(`${baseUrl}get-product-data/${userId}`);
-      console.log("Fetched products:", response.data);
       setItems(response.data);
       if (shouldClearSearch) {
         setSearchQuery("");
