@@ -176,19 +176,19 @@ const AddProduct = () => {
   return (
     <div className="container-fluid mx-auto px-4 max-[375px]:px-0">
       <ToastContainer />
-      <h1 className="text-3xl font-bold mt-3 text-center font-serif text-teal-600 bg-gray-200 py-2 px-6 rounded-full shadow-md">
+      <h1 className="text-3xl font-bold mt-1  text-center font-serif text-teal-600 bg-200 py-1 px-6 ">
         Add Products
       </h1>
       <form
-        className="form-wrapper flex flex-col md:flex-row md:px-0 bg-white py-4 shadow-md rounded-lg"
+        className="form-wrapper flex flex-col md:flex-row md:px-0 bg-white py-2 shadow-md rounded-lg "
         onSubmit={handleSubmit}
       >
         <div
-          className="form-column bg-gray-100 w-full rounded-tl-lg pt-2 md:w-1/3 md:px-3 max-[767px]:grid justify-center"
+          className="form-column bg-gray-100 w-full  mt-3 rounded-lg pt-2 md:w-1/3 md:px-3 max-[767px]:grid justify-center"
           data-aos="fade-right"
         >
-          <div className="mb-2 flex flex-wrap">
-            <div className="input-group block md:inline-block md:w-5/12">
+          <div className="mb-0 flex flex-wrap justify-evenly">
+            <div className="input-group block md:inline-block md:w-5/12 ">
               <label
                 htmlFor="productName"
                 className="block font-medium text-gray-700"
@@ -198,12 +198,12 @@ const AddProduct = () => {
               <input
                 type="text"
                 id="productName"
-                className="form-input mt-1"
+                className="form-input mt-1 w-full p-1"
                 value={formData.productName}
                 onChange={handleChange}
               />
             </div>
-          </div>
+         
           <div className="mb-3">
             <div className="flex justify-between">
               <label
@@ -212,7 +212,7 @@ const AddProduct = () => {
               >
                 Category of Food
               </label>
-              <Link to="/categories">
+              <Link to="/categories" className="ml-3">
                 <svg
                   className="w-6 h-6 text-teal-600 mr-1"
                   aria-hidden="true"
@@ -232,7 +232,7 @@ const AddProduct = () => {
             </div>
             <select
               id="category"
-              className="form-select mt-1 w-full"
+              className="form-select mt-1 w-full p-1"
               value={formData.category}
               onChange={handleChange}
             >
@@ -244,14 +244,15 @@ const AddProduct = () => {
               ))}
             </select>
           </div>
-          <div className="mb-2 flex flex-wrap justify-between">
-            <div className="input-group w-full md:w-5/12 mb-4 md:mb-0">
+          </div>
+          <div className=" flex flex-wrap justify-evenly">
+            <div className="input-group w-full md:w-5/12 mb-4 md:mt-0">
               <label htmlFor="type" className="block font-medium text-gray-700">
                 Type
               </label>
               <select
                 id="type"
-                className="form-input mt-1 w-full"
+                className="form-input mt-1 w-full  p-1"
                 value={formData.type}
                 onChange={handleChange}
               >
@@ -270,20 +271,20 @@ const AddProduct = () => {
               <input
                 type="number"
                 id="price"
-                className="form-input mt-1 w-full"
+                className="form-input mt-1 h-7 w-full p-1  "
                 value={formData.price}
                 onChange={handleChange}
               />
             </div>
           </div>
-          <div className="mb-2 flex flex-wrap justify-between">
+          <div className=" flex flex-wrap justify-evenly -mt-2">
             <div className="input-group w-full md:w-5/12 mb-4 md:mb-0">
               <label htmlFor="unit" className="block font-medium text-gray-700">
                 Unit
               </label>
               <select
                 id="unit"
-                className="form-input mt-1 w-full"
+                className="form-input mt-1 w-full p-1"
                 value={formData.unit}
                 onChange={handleChange}
               >
@@ -309,23 +310,23 @@ const AddProduct = () => {
               <input
                 type="text"
                 id="stock"
-                className="form-input mt-1 w-full"
+                className="form-input mt-1 h-7 w-full p-1"
                 value={formData.stock}
                 onChange={handleChange}
               />
             </div>
           </div>
-          <div className="mb-3 flex flex-wrap justify-between">
+          <div className="mb-3 flex flex-wrap justify-between ">
             <div className="input-group w-full">
               <label
                 htmlFor="description"
-                className="block font-medium text-gray-700"
+                className="block font-medium text-gray-700 ml-6"
               >
                 Description
               </label>
               <textarea
                 id="description"
-                className="form-textarea mt-1 w-full resize-none"
+                className="form-textarea mt-1 w-[90%] m-auto"
                 rows="4"
                 value={formData.description}
                 onChange={handleChange}

@@ -39,14 +39,10 @@ const OrderHistory = () => {
       try {
          const response = await axios.get(`${baseUrl}bills/${userId}`);
          setData(response.data);
-
-         console.log("Bills :", data)
-
       } catch (error) {
          console.error("Error fetching data:", error);
       }
    };
-
 
    function formatDate(dateString) {
       return new Date(dateString).toLocaleDateString();
@@ -114,9 +110,7 @@ const OrderHistory = () => {
       };
    };
 
-
    const filteredData = filterData(data);
-   console.log("Filtered data :", filteredData)
    const totalPrice = calculateTotalPrice(filteredData);
 
    return (
@@ -126,7 +120,6 @@ const OrderHistory = () => {
                Order History
             </h1>
             <div data-aos="fade-up">
-
                <div className="flex justify-between items-center my-3">
                   <select
                      id="type"
@@ -142,57 +135,47 @@ const OrderHistory = () => {
                      Total Price is: <span className="text-blue-600">₹ {totalPrice.toFixed(2)}</span>
                   </p>
                </div>
-               <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start mt-4">
-                  {/* Chart Section */}
-                  {filteredData.length === 0 ? (
-                     <div style={{ display: "none" }}>
-                        hii
-                     </div>
-                  ) : (
+               {filteredData.length === 0 ? (
+                  <p className="text-3xl font-bold font-serif mt-2 text-center text-red-600  py-2 px-6">No data available</p>
+               ) : (
+                  <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start mt-4">
                      <div className="flex justify-center items-center h-[35vh] w-full lg:w-2/5 p-4 bg-white shadow-md rounded-lg">
-                        <h1>THis is data chart</h1>
                         <Line data={getChartData(filteredData)} />
                      </div>
-                  )}
-
-                  {/* <div className="flex justify-center items-center h-[35vh] w-full lg:w-2/5 p-4 bg-white shadow-md rounded-lg">
-                     <Line data={getChartData(filteredData)} />
-                  </div> */}
-
-                  {/* Table Section */}
-                  <div className="w-full lg:w-3/5 px-4 max-md:px-0 mt-6 lg:mt-0">
-                     <div className="overflow-x-auto">
-                        <table className="min-w-full bg-white shadow-md rounded-lg">
-                           <thead>
-                              <tr className="bg-gray-200">
-                                 <th className="py-2 px-4 text-start border-b">Date</th>
-                                 <th className="py-2 px-4 border-b text-start">Name</th>
-                                 <th className="py-2 px-4 border-b text-start">Mobile</th>
-                                 <th className="py-2 px-4 border-b text-start">Total</th>
-                              </tr>
-                           </thead>
-                           <tbody>
-                              {filteredData.map((item) => (
-                                 <tr key={item._id} className="hover:bg-gray-100">
-                                    <td className="py-2 px-4 border-b text-start">
-                                       {formatDate(item.timestamp)}
-                                    </td>
-                                    <td className="py-2 px-4 border-b text-start">
-                                       {item.name}
-                                    </td>
-                                    <td className="py-2 px-4 border-b text-start">
-                                       {item.mobile}
-                                    </td>
-                                    <td className="py-2 px-4 border-b text-start">
-                                       ₹ {item.totalAmount}
-                                    </td>
+                     <div className="w-full lg:w-3/5 px-4 max-md:px-0 mt-6 lg:mt-0">
+                        <div className="overflow-x-auto">
+                           <table className="min-w-full bg-white shadow-md rounded-lg">
+                              <thead>
+                                 <tr className="bg-gray-200">
+                                    <th className="py-2 px-4 text-start border-b">Date</th>
+                                    <th className="py-2 px-4 border-b text-start">Name</th>
+                                    <th className="py-2 px-4 border-b text-start">Mobile</th>
+                                    <th className="py-2 px-4 border-b text-start">Total</th>
                                  </tr>
-                              ))}
-                           </tbody>
-                        </table>
+                              </thead>
+                              <tbody>
+                                 {filteredData.map((item) => (
+                                    <tr key={item._id} className="hover:bg-gray-100">
+                                       <td className="py-2 px-4 border-b text-start">
+                                          {formatDate(item.timestamp)}
+                                       </td>
+                                       <td className="py-2 px-4 border-b text-start">
+                                          {item.name}
+                                       </td>
+                                       <td className="py-2 px-4 border-b text-start">
+                                          {item.mobile}
+                                       </td>
+                                       <td className="py-2 px-4 border-b text-start">
+                                          ₹ {item.totalAmount}
+                                       </td>
+                                    </tr>
+                                 ))}
+                              </tbody>
+                           </table>
+                        </div>
                      </div>
                   </div>
-               </div>
+               )}
             </div>
          </div>
       </div>
