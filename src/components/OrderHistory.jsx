@@ -5,11 +5,14 @@ import { jwtDecode } from "jwt-decode";
 import { Line } from 'react-chartjs-2';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import BillModal from "./BillModal";
 
 const OrderHistory = () => {
    const [data, setData] = useState([]);
    const [filter, setFilter] = useState("All Transactions");
    const [userId, setUserId] = useState("");
+   const [selectedOrder, setSelectedOrder] = useState(null);
+   const [isBillModalOpen, setIsBillModalOpen] = useState(false);
 
    useEffect(() => {
       AOS.init({
@@ -114,10 +117,15 @@ const OrderHistory = () => {
       };
    };
 
+   const handleViewBill = (order) => {
+      setSelectedOrder(order);
+      setIsBillModalOpen(true);
+   }
 
    const filteredData = filterData(data);
    console.log("Filtered data :", filteredData)
    const totalPrice = calculateTotalPrice(filteredData);
+
 
    return (
       <div className="container py-3">
@@ -160,6 +168,7 @@ const OrderHistory = () => {
                                  <th className="py-2 px-4 border-b text-start">Name</th>
                                  <th className="py-2 px-4 border-b text-start">Mobile</th>
                                  <th className="py-2 px-4 border-b text-start">Total</th>
+                                 <th className="py-2 px-4 border-b text-start">Bill</th>
                               </tr>
                            </thead>
                            <tbody>
@@ -177,6 +186,11 @@ const OrderHistory = () => {
                                     <td className="py-2 px-4 border-b text-start">
                                        ₹ {item.totalAmount}
                                     </td>
+                                    <button className="flex mt-1 ml-3 items-center justify-center w-8 h-8 py-2 px-4 border border-gray-300 rounded hover:bg-sky-300"
+                                       onClick={() => handleViewBill(item)}
+                                    >
+                                       <span className=" text-center text-lg">👁️</span>
+                                    </button>
                                  </tr>
                               ))}
                            </tbody>
@@ -186,6 +200,18 @@ const OrderHistory = () => {
                </div>
             </div>
          </div>
+         {isBillModalOpen && selectedOrder && (
+            <BillModal
+               billingDetails={{
+                  name: selectedOrder.name,
+                  mobile: selectedOrder.mobile,
+               }}
+               orderItems={selectedOrder.orderItems}
+               calculateTotal={() => calculateTotalPrice([selectedOrder])}
+               closeModal={() => setIsBillModalOpen(false)}
+               shareOnWhatsApp={() => { }}
+            />
+         )}
       </div>
    );
 };
