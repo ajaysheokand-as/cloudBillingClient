@@ -39,7 +39,6 @@ function HomePage() {
    const [billSlip, setBillSlip] = useState('');
    const [isBillModalOpen, setIsBillModalOpen] = useState(false);
    const { items, setItems } = useContext(ItemsContext);
-
    useEffect(() => {
       if (orderId) {
          fetchOrderDetails(orderId);
@@ -66,6 +65,7 @@ function HomePage() {
    };
 
    const allItems = Object.values(items).flat();
+
 
    const filteredItems = allItems.filter(
       (item) =>
@@ -125,7 +125,6 @@ function HomePage() {
    const closeModal = () => {
       setIsBillModalOpen(false);
    };
-
    return (
       <div className="flex flex-col h-screen">
          <main className="flex flex-grow bg-gray-200 p-4">
