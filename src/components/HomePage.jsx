@@ -39,6 +39,8 @@ function HomePage() {
    const [billSlip, setBillSlip] = useState('');
    const [isBillModalOpen, setIsBillModalOpen] = useState(false);
    const { items, setItems } = useContext(ItemsContext);
+      console.log("selected category",selectedCategory);
+      console.log("items",items);
 
    useEffect(() => {
       if (orderId) {
@@ -66,6 +68,7 @@ function HomePage() {
    };
 
    const allItems = Object.values(items).flat();
+console.log("allitems",allItems);
 
    const filteredItems = allItems.filter(
       (item) =>
