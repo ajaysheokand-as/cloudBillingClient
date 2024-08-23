@@ -8,6 +8,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 
 import { QrCode } from "./QrCode";
+import { useBill } from "../context/BillContext";
 
 
 
@@ -27,8 +28,7 @@ const BillingDetails = ({
 
   const [paymentMethod, setPaymentMethod] = useState("COD");
   const [upiDetails, setUpiDetails] = useState(null);
-  const [paymentVerified, setPaymentVerified] = useState(false);
-
+  const { setBillData } = useBill();
 
 
 
@@ -76,7 +76,7 @@ const BillingDetails = ({
     if (!orderItems || orderItems.length === 0) {
       toast.error("Add items to your order !!");
       return;
-    }
+    }   
 
     const totalAmount = calculateTotal();
     const billData = {
@@ -91,7 +91,6 @@ const BillingDetails = ({
       index,
       totalAmount,
       paymentMethod,
-      paymentVerified,
     };
 
     try {
@@ -99,8 +98,11 @@ const BillingDetails = ({
         await axios.put(`${baseUrl}updateBill/${orderId}`, billData);
         toast.success("Order Updated successfully!");
       } else {
-        await axios.post(`${baseUrl}bill/${userId}`, billData);
-        toast.success("Order placed successfully!");
+        const response = await axios.post(`${baseUrl}bill/${userId}`, billData);
+        const Bill = response?.data?.bill
+        setBillData(Bill);
+        toast.success(`Order placed successfully! Bill ID: ${response.data.bill.billId}`);
+        
       }
       generateBillSlip();
 

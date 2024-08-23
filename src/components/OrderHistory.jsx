@@ -165,10 +165,11 @@ const OrderHistory = () => {
                            <thead>
                               <tr className="bg-gray-200">
                                  <th className="py-2 px-4 text-start border-b">Date</th>
+                                 <th className="py-2 px-4 text-start border-b">Bill No.</th>
                                  <th className="py-2 px-4 border-b text-start">Name</th>
                                  <th className="py-2 px-4 border-b text-start">Mobile</th>
                                  <th className="py-2 px-4 border-b text-start">Total</th>
-                                 <th className="py-2 px-4 border-b text-start">Bill</th>
+                                 <th className="py-2 px-4 border-b text-start">View Bill</th>
                               </tr>
                            </thead>
                            <tbody>
@@ -176,6 +177,9 @@ const OrderHistory = () => {
                                  <tr key={item._id} className="hover:bg-gray-100">
                                     <td className="py-2 px-4 border-b text-start">
                                        {formatDate(item.timestamp)}
+                                    </td>
+                                    <td className="flex items-center justify-center mr-4 py-2 px-4 border-b text-start">
+                                       {item.billId}
                                     </td>
                                     <td className="py-2 px-4 border-b text-start">
                                        {item.name}
@@ -206,6 +210,7 @@ const OrderHistory = () => {
                   name: selectedOrder.name,
                   mobile: selectedOrder.mobile,
                }}
+               billIdOld={selectedOrder.billId}
                orderItems={selectedOrder.orderItems}
                calculateTotal={() => calculateTotalPrice([selectedOrder])}
                closeModal={() => setIsBillModalOpen(false)}

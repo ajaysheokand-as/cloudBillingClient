@@ -3,6 +3,7 @@ import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { baseUrl } from "../utils/Const";
 import { QrCode } from "./QrCode";
+import { useBill } from "../context/BillContext";
 
 const BillModal = ({
    billingDetails,
@@ -10,12 +11,14 @@ const BillModal = ({
    calculateTotal,
    closeModal,
    shareOnWhatsApp,
+   billIdOld,
 }) => {
    const [discount, setDiscount] = useState(0);
    const [userId, setUserId] = useState();
    const [rastroDetails, setRastroDetails] = useState({});
    const [gst, setGST] = useState(0);
    const billRef = useRef(null);
+   const {billData} = useBill();
 
    useEffect(() => {
       const fetchUserData = async (userId) => {
@@ -57,7 +60,6 @@ const BillModal = ({
    };
 
    const tota = calculateTotal();
-   console.log("total =", tota);
    const totalWithDiscount = calculateTotal() - discount;
    const totalWithGST = totalWithDiscount * (1 + gst / 100);
 
@@ -69,6 +71,8 @@ const BillModal = ({
       document.body.innerHTML = originalContents;
       window.location.reload();
    };
+
+   const billIdToShow = billIdOld || billData?.billId;
 
    return (
       <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 overflow-y-auto">
@@ -87,7 +91,7 @@ const BillModal = ({
                      </div>
                      <div className="bill-details mt-3 print:border-b-2 border-dotted border-gray-500 print:py-1">
                         <p className="flex justify-between">
-                           <span>Bill No:</span> <span>12345</span>
+                           <span>Bill No:</span> <span>{billIdToShow}</span>
                         </p>
                         <p className="flex justify-between">
                            <span>Date:</span>{" "}
