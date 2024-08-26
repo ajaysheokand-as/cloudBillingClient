@@ -4,7 +4,6 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 
 const ItemList = ({ filteredItems, addToOrder }) => {
-
   useEffect(() => {
     AOS.init({
       duration: 1000,
@@ -12,6 +11,7 @@ const ItemList = ({ filteredItems, addToOrder }) => {
       mirror: false,
     });
   }, []);
+
 
   if (filteredItems.length === 0) {
     return (

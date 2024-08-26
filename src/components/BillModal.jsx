@@ -2,6 +2,8 @@ import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { baseUrl } from "../utils/Const";
+import { QrCode } from "./QrCode";
+import { useBill } from "../context/BillContext";
 
 const BillModal = ({
    billingDetails,
@@ -9,38 +11,43 @@ const BillModal = ({
    calculateTotal,
    closeModal,
    shareOnWhatsApp,
+   billIdOld,
 }) => {
    const [discount, setDiscount] = useState(0);
-   const [userId, setUserId] = useState("");
+   const [userId, setUserId] = useState();
    const [rastroDetails, setRastroDetails] = useState({});
    const [gst, setGST] = useState(0);
    const billRef = useRef(null);
+   const {billData} = useBill();
 
    useEffect(() => {
-      const token = localStorage.getItem('token');
+      const fetchUserData = async (userId) => {
+         try {
+            const response = await axios.get(`${baseUrl}user/${userId}`);
+            setRastroDetails(response.data);
+            console.log("UPI is this:", response.data.upiId);
+         } catch (error) {
+            console.error("Error fetching user data:", error);
+         }
+      };
+
+      const token = localStorage.getItem("token");
       if (token) {
          const decodedToken = jwtDecode(token);
          console.log("Decoded Token:", decodedToken);
 
-         if (decodedToken.user) {
-            const userId = decodedToken.user.id;
-            setUserId(userId);
-            if (userId) {
-               axios.get(`${baseUrl}user/${userId}`)
-                  .then(response => {
-                     setRastroDetails(response.data);
-                  })
-                  .catch(error => {
-                     console.error('Error fetching user data:', error);
-                  });
-            } else {
-               console.error('Error: userId is missing in the decoded token');
-            }
+         if (decodedToken?.user?.id) {
+            const User = decodedToken.user.id;
+            console.log("User", User);
+            setUserId(User);
+            fetchUserData(User);
          } else {
-            console.error('Error: user object is missing in the decoded token');
+            console.error("Error: userId is missing in the decoded token");
          }
+      } else {
+         console.error("Error: token not found");
       }
-   }, []);
+   }, [userId]);
 
    const handleDiscountChange = (e) => {
       const value = parseFloat(e.target.value);
@@ -52,6 +59,7 @@ const BillModal = ({
       setGST(isNaN(value) ? 0 : value);
    };
 
+   const tota = calculateTotal();
    const totalWithDiscount = calculateTotal() - discount;
    const totalWithGST = totalWithDiscount * (1 + gst / 100);
 
@@ -64,12 +72,14 @@ const BillModal = ({
       window.location.reload();
    };
 
+   const billIdToShow = billIdOld || billData?.billId;
+
    return (
       <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 overflow-y-auto">
          <div className="bg-white p-4 md:p-6 rounded shadow-md w-full max-w-[450px] mx-2 sm:mx-4">
-            
+
             <div className="bill-slip bg-gray-100 p-4 rounded" ref={billRef}>
-               <div className="print:max-w-[200px]">
+               <div className="print:max-w-[250px] ">
                   <div className="bill">
                      <h2 className="text-center text-2xl font-bold">
                         {rastroDetails.name}
@@ -81,7 +91,7 @@ const BillModal = ({
                      </div>
                      <div className="bill-details mt-3 print:border-b-2 border-dotted border-gray-500 print:py-1">
                         <p className="flex justify-between">
-                           <span>Bill No:</span> <span>12345</span>
+                           <span>Bill No:</span> <span>{billIdToShow}</span>
                         </p>
                         <p className="flex justify-between">
                            <span>Date:</span>{" "}
@@ -106,12 +116,34 @@ const BillModal = ({
                         Order Details :
                      </h3>
                      <ul className="list-disc list-inside mb-2 max-h-[100px] overflow-auto print:max-h-full">
-                        {orderItems.map((item, index) => (
-                           <li key={item.productName} className="flex justify-between">
+                        <li className="flex justify-between">
+                           <span>
+                              Item
+                           </span>
+                           <div className="flex justify-between w-28">
                               <span>
-                                 {index + 1}. {item.productName} x {item.quantity}{" "}
+                                 QTY
                               </span>
-                              <span>₹{item.price * item.quantity}</span>
+                              <span>
+                                 Price
+                              </span>
+                           </div>
+                        </li>
+                     </ul>
+                     <ul className="list-disc list-inside mb-2 max-h-[100px] overflow-auto print:max-h-full">
+                        {orderItems.map((item, index) => (
+                           <li key={item.productName} className="flex justify-between w-full">
+                              <span>
+                                 {item.productName}
+                              </span>
+                              <div className="flex justify-between w-24">
+                                 <span>
+                                    {item.quantity}
+                                 </span>
+                                 <span>
+                                    ₹{item.price * item.quantity}
+                                 </span>
+                              </div>
                            </li>
                         ))}
                      </ul>
@@ -151,16 +183,17 @@ const BillModal = ({
                      </p>
                   </div>
 
+
+
                   <div className='thanks my-3 text-center'>
                      <p className='text-xl'>Thanks for visiting !!</p>
 
-                     {rastroDetails.qrCodeImageUrl && (
-                        <div className='flex justify-center mt-2'>
-                           <img src={rastroDetails.qrCodeImageUrl} className='w-24 h-24' />
+
+                     {rastroDetails.upiId && (
+                        <div className="mt-4">
+                           <QrCode upiDetails={rastroDetails.upiId} totalAmount={tota} />
+                           <p className='text-lg'> Scan to pay your bill </p>
                         </div>
-                     )}
-                     {rastroDetails.qrCodeImageUrl && (
-                        <p className='text-lg'> Scan to pay your bill </p>
                      )}
                   </div>
                </div>

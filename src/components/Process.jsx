@@ -62,7 +62,7 @@ const Process = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mt-4 text-center font-serif text-teal-600 bg-gray-200 py-2 px-6 rounded-full shadow-md">
+      <h1 className="text-3xl font-bold mt-4 text-center font-serif text-teal-600 bg-200 py-2 px-6">
         Process
       </h1>
       <div className="overflow-x-auto mt-8">
