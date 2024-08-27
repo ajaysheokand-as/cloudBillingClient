@@ -5,11 +5,14 @@ import { jwtDecode } from "jwt-decode";
 import { Line } from 'react-chartjs-2';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import BillModal from "./BillModal";
 
 const OrderHistory = () => {
    const [data, setData] = useState([]);
    const [filter, setFilter] = useState("All Transactions");
    const [userId, setUserId] = useState("");
+   const [selectedOrder, setSelectedOrder] = useState(null);
+   const [isBillModalOpen, setIsBillModalOpen] = useState(false);
    const [currentPage, setCurrentPage] = useState(1);
    const [itemsPerPage, setItemsPerPage] = useState(5); // Number of items per page
 
@@ -109,6 +112,11 @@ const OrderHistory = () => {
       };
    };
 
+   const handleViewBill = (order) => {
+      setSelectedOrder(order);
+      setIsBillModalOpen(true);
+   }
+
    const formatDate = (dateString) => {
       return new Date(dateString).toLocaleDateString();
    };
@@ -187,10 +195,12 @@ const OrderHistory = () => {
                               <thead>
                                  <tr className="bg-gray-200">
                                     <th className="py-2 px-4 text-start border-b">Date</th>
-                                    <th className="py-2 px-4 border-b text-start">Name</th>
+                                    <th className="py-2 px-4 text-start border-b">Bill No.</th>
+                                 <th className="py-2 px-4 border-b text-start">Name</th>
                                     <th className="py-2 px-4 border-b text-start">Mobile</th>
                                     <th className="py-2 px-4 border-b text-start">Total</th>
-                                 </tr>
+                                    <th className="py-2 px-4 border-b text-start">View Bill</th>
+                              </tr>
                               </thead>
                               <tbody>
                                  {paginatedData.map((item) => (
@@ -198,7 +208,10 @@ const OrderHistory = () => {
                                        <td className="py-2 px-4 border-b text-start">
                                           {formatDate(item.timestamp)}
                                        </td>
-                                       <td className="py-2 px-4 border-b text-start">
+                                       <td className="flex items-center justify-center mr-4 py-2 px-4 border-b text-start">
+                                       {item.billId}
+                                    </td>
+                                    <td className="py-2 px-4 border-b text-start">
                                           {item.name}
                                        </td>
                                        <td className="py-2 px-4 border-b text-start">
@@ -207,7 +220,12 @@ const OrderHistory = () => {
                                        <td className="py-2 px-4 border-b text-start">
                                           ₹ {item.totalAmount}
                                        </td>
-                                    </tr>
+                                       <button className="flex mt-1 ml-3 items-center justify-center w-8 h-8 py-2 px-4 border border-gray-300 rounded hover:bg-sky-300"
+                                       onClick={() => handleViewBill(item)}
+                                    >
+                                       <span className=" text-center text-lg">👁️</span>
+                                    </button>
+                                 </tr>
                                  ))}
                               </tbody>
                            </table>
@@ -222,6 +240,19 @@ const OrderHistory = () => {
                )}
             </div>
          </div>
+         {isBillModalOpen && selectedOrder && (
+            <BillModal
+               billingDetails={{
+                  name: selectedOrder.name,
+                  mobile: selectedOrder.mobile,
+               }}
+               billIdOld={selectedOrder.billId}
+               orderItems={selectedOrder.orderItems}
+               calculateTotal={() => calculateTotalPrice([selectedOrder])}
+               closeModal={() => setIsBillModalOpen(false)}
+               shareOnWhatsApp={() => { }}
+            />
+         )}
       </div>
    );
 };

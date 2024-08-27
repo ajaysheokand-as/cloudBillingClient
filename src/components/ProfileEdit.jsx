@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ProfileEdit = ({ isOpen, onClose, onSubmit, adminDetails, handleInputChange, onImageChange,  isSubmitting }) => {
+const ProfileEdit = ({ isOpen, onClose, onSubmit, adminDetails, handleInputChange, onImageChange, isSubmitting }) => {
    return (
       <div className={`fixed inset-0 z-50 ${isOpen ? 'flex' : 'hidden'} items-center justify-center overflow-auto`}>
          <div className="absolute inset-0 bg-gray-600 bg-opacity-50"></div>
@@ -95,7 +95,20 @@ const ProfileEdit = ({ isOpen, onClose, onSubmit, adminDetails, handleInputChang
                      </div>
                   </div>
 
-              
+                  <div className="flex justify-around items-center w-full">
+                     <div className="w-full md:w-1/2 px-4 mb-4">
+                        <label className="block text-gray-700 font-semibold font-serif mb-2">UPI ID</label>
+                        <input
+                           type="text"
+                           name="upiId"
+                           value={adminDetails.upiId}
+                           onChange={handleInputChange}
+                           className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                        />
+                     </div>
+                  </div>
+
+
 
 
                </div>
