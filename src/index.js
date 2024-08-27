@@ -7,6 +7,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { ItemsProvider } from './context/ItemsContext';
 import { AuthProvider } from "./components/authentication/AuthContext";
 import { BillProvider } from "./context/BillContext";
+import { GstDiscountProvider } from "./context/GstDiscountContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -15,7 +16,9 @@ root.render(
       <AuthProvider>
         <ItemsProvider>
           <BillProvider>
+          <GstDiscountProvider>
           <App />
+          </GstDiscountProvider>
           </BillProvider>
         </ItemsProvider>
       </AuthProvider>
