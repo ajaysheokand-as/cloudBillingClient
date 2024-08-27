@@ -63,7 +63,7 @@ const Login = () => {
 
   return (
     // <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
-    <div className="img2">
+    <div className="img2 ">
       <div className="flex justify-center z-[1] items-center h-screen">
         <div className="backdrop-blur-[2px]">
           <form
@@ -78,14 +78,14 @@ const Login = () => {
               name="emailOrMobile"
               placeholder="Enter Your Email & Mobile No."
               onChange={handleChange}
-              className="inputtext appearance-none border-2 border-gray-300 rounded-md bg-transparent py-2 px-4 mb-4 w-full transform transition duration-500 hover:scale-105 focus:outline-none focus:border-[#000000d0] focus:ring-2 focus:ring-blue-200 focus:ring-opacity-50"
+              className="inputtext appearance-none border-2 border-gray-300 rounded-md bg-transparent py-2 px-4 mb-4 w-full focus:outline-none focus:border-[#000000d0]"
             />
             <input
               type="password"
               name="password"
               placeholder="Password"
               onChange={handleChange}
-              className="inputtext appearance-none border-2 border-gray-300 rounded-md bg-transparent py-2 px-4 mb-2 w-full transform transition duration-500 hover:scale-105 focus:outline-none focus:border-[#000000d0] focus:ring-2 focus:ring-blue-200 focus:ring-opacity-50"
+              className="inputtext appearance-none border-2 border-gray-300 rounded-md bg-transparent py-2 px-4 mb-2 w-full focus:outline-none focus:border-[#000000d0]"
             />
             {error && <p className="text-red-500 mb-2">{error}</p>}
 

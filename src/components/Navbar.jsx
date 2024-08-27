@@ -41,9 +41,13 @@ const Navbar = () => {
     setRegistrationType(type);
   }, []);
 
+  // Rohit's Modification for navbar
+
+  
+
   return (
     <div>
-      <nav className="bg-white shadow-md py-1 px-4 flex items-center justify-between">
+      <nav className="bg-white w-full shadow-md py-1 px-4 flex items-center justify-between fixed top-0 z-40">
         {/* Left Section */}
         <div className="flex items-center">
           <button
@@ -62,7 +66,13 @@ const Navbar = () => {
           {/* Always show Login and Register buttons */}
           {(location.pathname === "/" || location.pathname === "/register") && (
             <>
-              <Link to="/register">
+
+              <div className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition duration-300">Help Line:- 1234567890</div>
+
+              {/* here Rohit's modification */}
+
+
+              {/* <Link to="/register">
                 <button className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition duration-300">
                   Register Now
                 </button>
@@ -71,7 +81,7 @@ const Navbar = () => {
                 <button className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition duration-300">
                   Login
                 </button>
-              </Link>
+              </Link> */}
             </>
           )}
           {/* Conditional rendering for other links */}
@@ -146,10 +156,7 @@ const Navbar = () => {
       </nav>
 
       {/* Sidebar for mobile and tablet screens */}
-      <div
-        className={`fixed top-0 z-50 right-0 h-full bg-white shadow-md transform ${isSidebarOpen ? "translate-x-0" : "translate-x-full"
-          } transition-transform duration-300 lg:hidden`}
-      >
+      <div className={`fixed top-0 z-50 right-0 h-full bg-white shadow-md transform ${isSidebarOpen ? "translate-x-0" : "translate-x-full"} transition-transform duration-300 lg:hidden`}>
         <div className="p-4">
           <button className="text-xl mb-4" onClick={toggleSidebar}>
             <i className="fas fa-times hover:text-red-600 transition duration-300"></i>

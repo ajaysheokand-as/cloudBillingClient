@@ -3,6 +3,8 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { baseUrl } from "../../utils/Const";
 import "../Login&Register/LoginRegister.css";
+import { ToastContainer, toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 const Register = () => {
    const navigate = useNavigate();
@@ -10,7 +12,7 @@ const Register = () => {
    const [registrationType, setRegistrationType] = useState("");
    const [isSubmitting, setIsSubmitting] = useState(false);
    const [formData, setFormData] = useState({
-      name: "",
+      shop_type: "",
       owner: "",
       mobile: "",
       address: "",
@@ -26,25 +28,6 @@ const Register = () => {
    const handleChange = (e) => {
       const { name, value } = e.target;
       setFormData({ ...formData, [name]: value });
-
-      let emailError = "";
-      let mobileError = "";
-
-      if (name === "email") {
-         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-         emailError = emailPattern.test(value) ? "" : "Please enter a valid email address.";
-      }
-
-      if (name === "mobile") {
-         const mobilePattern = /^[0-9]{10}$/;
-         mobileError = mobilePattern.test(value) ? "" : "Please enter a valid 10-digit mobile number.";
-      }
-
-      setErrors({
-         ...errors,
-         [name]: name === "email" ? emailError : mobileError,
-         form: ""
-      });
    };
 
    const handleDropdownChange = (e) => {
@@ -55,18 +38,62 @@ const Register = () => {
       e.preventDefault();
       setIsSubmitting(true);
 
+      let emailError = "";
+      let mobileError = "";
+
+      if (!formData.email) {
+         toast.warning("Please Enter the Mail")
+      }
+
+      if (!formData.mobile) {
+         toast.warning("Please Enter the Mobile Number")
+      }
+
+      if (!formData.password) {
+         toast.warning("Please Enter the Password")
+      }
+
+      if (!formData.owner) {
+         toast.warning("Please Enter the Owner's Name")
+      }
+
+      if (!formData.address) {
+         toast.warning("Please Enter the Address")
+      }
+
+      if (formData?.email) {
+         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+         emailError = emailPattern.test(formData.email) ? "" : "Please enter a valid email address.";
+         if (emailError) {
+            toast.error(emailError, { position: "top-right", zIndex: 9999 });
+         }
+      }
+
+      if (formData?.mobile) {
+         const mobilePattern = /^[0-9]{10}$/;
+         mobileError = mobilePattern.test(formData.mobile) ? "" : "Please enter a valid 10-digit mobile number.";
+         if (mobileError) {
+            toast.error(mobileError, { position: "top-right", zIndex: 9999 });
+         }
+      }
+
       if (!registrationType) {
-         setErrors({ ...errors, form: "Please select a registration type." });
+         setErrors({ ...errors, form: toast.error("Please select a registration type.") });
          setIsSubmitting(false);
          return;
       }
 
       for (const key in formData) {
          if (!formData[key]) {
-            setErrors({ ...errors, form: `Please fill in the ${key} field.` });
+            setErrors({ ...errors, form: toast.warning`(Please fill in the ${key} field.)` });
             setIsSubmitting(false);
             return;
          }
+      }
+
+      if (emailError || mobileError) {
+         setIsSubmitting(false);
+         return;
       }
 
       try {
@@ -74,36 +101,46 @@ const Register = () => {
             ...formData,
             type: registrationType,
          });
-         console.log(response.data);
+         console.log("result4545=>", response)
          navigate("/");
+         toast.success(response.data.msg, { position: "top-right", zIndex: 9999 })
       } catch (error) {
          setErrors({
             ...errors,
-            form: error.response?.data?.msg || "Registration failed."
+            form: error?.response?.data?.msg || "Registration failed."
          });
-         console.error("Error:", error);
+
+         console.log("Error", error);
+         if (error.response.status == 400) {
+            toast.warning("Email already exixts")
+         }
+
+         if (error.response.status == 401) {
+            toast.warning("Mobile Number already exixts")
+         }
       }
       setIsSubmitting(false);
    };
+
 
    return (
       <div className="img">
          <div className="flex justify-center z-[1] items-center h-screen">
             <div className="backdrop-blur-[2px]">
                <form
-                  onSubmit={handleSubmit}
-                  className="bg-[#a2999984] z-[3] max-w-[650px] rounded px-8 pt-4 pb-4 mb-2"
+                  // onSubmit={handleSubmit}
+                  className="bg-[#a2999984] z-[3] max-w-[650px] rounded px-8 pt-2 pb-2 "
                >
                   <h2 className=" text text-2xl font-bold mb-2 text-center">
                      Register{" "}
                      {registrationType.charAt(0).toUpperCase() +
                         registrationType.slice(1)}
                   </h2>
-                  <p className=" text mb-6 text-center">
+                  <p className=" text mb-2 text-center">
                      Create your account to get started
                   </p>
 
-                  <div className="mb-4">
+                  <div className="mb-2">
                      <label
                         htmlFor="registrationType"
                         className="text block text-sm font-bold mb-2"
@@ -122,33 +159,33 @@ const Register = () => {
                      </select>
                   </div>
 
-                  <div className="flex gap-3 lg:flex-row flex-col">
+                  <div className="flex gap-2 lg:flex-row flex-col">
                      <input
                         type="text"
-                        name="name"
+                        name="shop_type"
                         placeholder={
                            registrationType === "store"
                               ? "Store Name"
                               : "Restaurant Name"
                         }
                         onChange={handleChange}
-                        className="inputtext appearance-none border-2 border-gray-300 rounded-md bg-transparent py-2 px-4 mb-4 w-full transform transition duration-500 hover:scale-105 focus:outline-none focus:border-[#000000d0] focus:ring-2 focus:ring-blue-200 focus:ring-opacity-50"
+                        className="inputtext appearance-none border-2 border-gray-300 rounded-md bg-transparent py-2 px-4 mb-2 w-full focus:outline-none focus:border-[#000000d0]"
                      />
                      <input
                         type="text"
                         name="owner"
                         placeholder="Owner's Name"
                         onChange={handleChange}
-                        className="inputtext appearance-none border-2 border-gray-300 rounded-md bg-transparent py-2 px-4 mb-4 w-full transform transition duration-500 hover:scale-105 focus:outline-none focus:border-[#000000d0] focus:ring-2 focus:ring-blue-200 focus:ring-opacity-50"
+                        className="inputtext appearance-none border-2 border-gray-300 rounded-md bg-transparent py-2 px-4 mb-2 w-full focus:outline-none focus:border-[#000000d0]"
                      />
                   </div>
-                  <div className="flex gap-3 lg:flex-row flex-col">
+                  <div className="flex gap-2 lg:flex-row flex-col">
                      <input
                         type="email"
                         name="email"
                         placeholder="Email"
                         onChange={handleChange}
-                        className=" inputtext appearance-none border-2 border-gray-300 rounded-md bg-transparent py-2 px-4 mb-4 w-full transform transition duration-500 hover:scale-105 focus:outline-none focus:border-[black] focus:ring-2 focus:ring-blue-200 focus:ring-opacity-50"
+                        className=" inputtext appearance-none border-2 border-gray-300 rounded-md bg-transparent py-2 px-4 mb-2 w-full focus:outline-none focus:border-[#000000d0]"
                      />
 
                      <input
@@ -156,7 +193,7 @@ const Register = () => {
                         name="mobile"
                         placeholder="Mobile No."
                         onChange={handleChange}
-                        className="inputtext appearance-none border-2 border-gray-300 rounded-md bg-transparent py-2 px-4 mb-4 w-full transform transition duration-500 hover:scale-105 focus:outline-none focus:border-[black] focus:ring-2 focus:ring-blue-200 focus:ring-opacity-50"
+                        className="inputtext appearance-none border-2 border-gray-300 rounded-md bg-transparent py-2 px-4 mb-2 w-full focus:outline-none focus:border-[#000000d0]"
                      />
                   </div>
                   <input
@@ -164,23 +201,21 @@ const Register = () => {
                      name="address"
                      placeholder="Address"
                      onChange={handleChange}
-                     className="inputtext appearance-none border-2 border-gray-300 rounded-md bg-transparent py-2 px-4 mb-4 w-full transform transition duration-500 hover:scale-105 focus:outline-none focus:border-[black] focus:ring-2 focus:ring-blue-200 focus:ring-opacity-50"
+                     className="inputtext appearance-none border-2 border-gray-300 rounded-md bg-transparent py-2 px-4 mb-2 w-full focus:outline-none focus:border-[#000000d0]"
                   />
                   <input
                      type="password"
                      name="password"
                      placeholder="Password"
                      onChange={handleChange}
-                     className="inputtext appearance-none border-2 border-gray-300 rounded-md bg-transparent py-2 px-4 mb-2 w-full transform transition duration-500 hover:scale-105 focus:outline-none focus:border-[black] focus:ring-2 focus:ring-blue-200 focus:ring-opacity-50"
+                     className="inputtext appearance-none border-2 border-gray-300 rounded-md bg-transparent py-2 px-4 mb-2 w-full focus:outline-none focus:border-[#000000d0]"
                   />
-                  {errors.email && <p className="flex text-red-500 mb-1">{errors.email}</p>}
-                  {errors.mobile && <p className="text-red-500 mb-1">{errors.mobile}</p>}
-                  {errors.form && <p className="text-red-500 mb-1">{errors.form}</p>}
 
                   <button
                      type="submit"
                      className="bg-[#383636c8] hover:bg-[#262525] transform transition duration-500 hover:scale-105 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:shadow-outline"
                      disabled={isSubmitting}
+                     onClick={handleSubmit}
                   >
                      {isSubmitting ? 'Processing...' : 'Register'}
                   </button>
@@ -194,6 +229,7 @@ const Register = () => {
                </form>
             </div>
          </div>
+         <ToastContainer />
       </div>
    );
 };
