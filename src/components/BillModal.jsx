@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { baseUrl } from "../utils/Const";
+import { useGstDiscount } from "../context/GstDiscountContext"; // Import the context
 
 const BillModal = ({
    billingDetails,
@@ -10,17 +11,15 @@ const BillModal = ({
    closeModal,
    shareOnWhatsApp,
 }) => {
-   const [discount, setDiscount] = useState(0);
+   const { discount, gst } = useGstDiscount(); // Use context
    const [userId, setUserId] = useState("");
    const [rastroDetails, setRastroDetails] = useState({});
-   const [gst, setGST] = useState(0);
    const billRef = useRef(null);
 
    useEffect(() => {
       const token = localStorage.getItem('token');
       if (token) {
          const decodedToken = jwtDecode(token);
-         console.log("Decoded Token:", decodedToken);
 
          if (decodedToken.user) {
             const userId = decodedToken.user.id;
@@ -42,17 +41,7 @@ const BillModal = ({
       }
    }, []);
 
-   const handleDiscountChange = (e) => {
-      const value = parseFloat(e.target.value);
-      setDiscount(isNaN(value) ? 0 : value);
-   };
-
-   const handleGSTChange = (e) => {
-      const value = parseFloat(e.target.value);
-      setGST(isNaN(value) ? 0 : value);
-   };
-
-   const totalWithDiscount = calculateTotal() - discount;
+   const totalWithDiscount = calculateTotal() - (calculateTotal() * (discount / 100));
    const totalWithGST = totalWithDiscount * (1 + gst / 100);
 
    const handlePrint = () => {
@@ -67,7 +56,7 @@ const BillModal = ({
    return (
       <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 overflow-y-auto">
          <div className="bg-white p-4 md:p-6 rounded shadow-md w-full max-w-[450px] mx-2 sm:mx-4">
-            
+
             <div className="bill-slip bg-gray-100 p-4 rounded" ref={billRef}>
                <div className="print:max-w-[200px]">
                   <div className="bill">
@@ -118,31 +107,18 @@ const BillModal = ({
                      <p className="flex justify-between bill-total text-lg font-semibold mt-4">
                         <span>Sub Total :</span> <span>₹{calculateTotal()}</span>
                      </p>
-
                      <div className="discount flex flex-col sm:flex-row sm:justify-between print:hidden">
                         <div className="mt-2 sm:mt-0">
-                           <label htmlFor="discount" className="font-semibold pl-1">
+                           <label className="font-semibold pl-1">
                               Discount:
                            </label>
-                           <input
-                              type="number"
-                              id="discount"
-                              className="border border-gray-300 rounded p-1 max-w-[150px] print:border-none"
-                              value={discount}
-                              onChange={handleDiscountChange}
-                           />
+                           <span className="pl-1">{discount}%</span>
                         </div>
                         <div className="mt-2 sm:mt-0">
-                           <label htmlFor="gst" className="font-semibold pl-1">
+                           <label className="font-semibold pl-1">
                               GST (%):
                            </label>
-                           <input
-                              type="number"
-                              id="gst"
-                              className="border border-gray-300 rounded p-1 max-w-[150px] print:border-none"
-                              value={gst}
-                              onChange={handleGSTChange}
-                           />
+                           <span className="pl-1">{gst}%</span>
                         </div>
                      </div>
 

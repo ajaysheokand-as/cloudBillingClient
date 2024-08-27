@@ -89,6 +89,34 @@ function HomePage() {
          setOrderItems([...orderItems, { ...item, quantity: 1 }]);
       }
    };
+   const addToOrderincrease = (item) => {
+      setOrderItems((prevOrderItems) =>
+         prevOrderItems.map((orderItem) => {
+            if (orderItem.productName === item.productName) {
+               return {
+                  ...orderItem,
+                  quantity: orderItem.quantity + 1,
+               };
+            }
+            return orderItem;
+         })
+      );
+   };
+
+   const addToOrderdecrease = (item) => {
+      setOrderItems((prevOrderItems) =>
+         prevOrderItems.map((orderItem) => {
+            if (orderItem.productName === item.productName) {
+               return {
+                  ...orderItem,
+                  quantity: Math.max(orderItem.quantity - 1, 1),
+               };
+            }
+            return orderItem;
+         })
+      );
+   };
+
 
    const calculateTotal = () => {
       return orderItems.reduce(
@@ -155,6 +183,8 @@ function HomePage() {
                   generateBillSlip={generateBillSlip}
                   removeFromOrder={removeFromOrder}
                   orderId={orderId}
+                  addToOrderincrease={addToOrderincrease}
+                  addToOrderdecrease={addToOrderdecrease}
                />
             </div>
          </main>
