@@ -8,7 +8,7 @@ const Process = () => {
   const [data, setData] = useState([]);
   const [userId, setUserId] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
+  const itemsPerPage = 5;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,9 +25,6 @@ const Process = () => {
     try {
       const response = await axios.get(`${baseUrl}bills/${userId}`);
       setData(response.data);
-
-      console.log("Bills :", data)
-
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -172,24 +169,26 @@ const Process = () => {
           </tbody>
         </table>
       </div>
-      <div className="flex justify-between mt-4">
+      <div className="flex items-center justify-center">
+      <div className="flex justify-between w-72 mt-4">
         <button
-          className="px-4 py-2 bg-gray-200 text-gray-700 rounded"
+          className="px-2 py-2 bg-gray-200 text-gray-700 rounded"
           onClick={handlePreviousPage}
           disabled={currentPage === 1}
         >
           Previous
         </button>
-        <span>
-          {startIndex + 1} to {Math.min(endIndex, data.length)}
+        <span className="mt-2">
+          Page {currentPage} of {Math.ceil(data.length / itemsPerPage)}
         </span>
         <button
-          className="px-4 py-2 bg-gray-200 text-gray-700 rounded"
+          className="px-6 py-2 bg-gray-200 text-gray-700 rounded"
           onClick={handleNextPage}
           disabled={endIndex >= data.length}
         >
           Next
         </button>
+      </div>
       </div>
     </div>
   );

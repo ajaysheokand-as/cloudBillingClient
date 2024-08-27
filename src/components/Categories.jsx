@@ -29,7 +29,7 @@ const Categories = () => {
    const [userId, setUserId] = useState("");
 
    const [currentPage, setCurrentPage] = useState(1);
-   const CategoryesPerPage = 15;
+   const CategoryesPerPage = 10;
    const totalPages = Math.ceil(data.length / CategoryesPerPage);
 
    const indexOfLastCategorye = currentPage * CategoryesPerPage;
