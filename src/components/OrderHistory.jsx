@@ -13,6 +13,8 @@ const OrderHistory = () => {
    const [userId, setUserId] = useState("");
    const [selectedOrder, setSelectedOrder] = useState(null);
    const [isBillModalOpen, setIsBillModalOpen] = useState(false);
+   const [currentPage, setCurrentPage] = useState(1);
+   const [itemsPerPage, setItemsPerPage] = useState(5); // Number of items per page
 
    useEffect(() => {
       AOS.init({
@@ -47,11 +49,7 @@ const OrderHistory = () => {
       }
    };
 
-   function formatDate(dateString) {
-      return new Date(dateString).toLocaleDateString();
-   }
-
-   function filterData(data) {
+   const filterData = (data) => {
       const now = new Date();
       let filteredData = data;
 
@@ -80,18 +78,19 @@ const OrderHistory = () => {
       }
 
       return filteredData;
-   }
+   };
 
-   function calculateTotalPrice(filteredData) {
+   const calculateTotalPrice = (filteredData) => {
       return filteredData.reduce((total, item) => {
          return total + item.orderItems.reduce((subTotal, orderItem) => {
             return subTotal + orderItem.price * orderItem.quantity;
          }, 0);
       }, 0);
-   }
+   };
 
    const handleFilterChange = (event) => {
       setFilter(event.target.value);
+      setCurrentPage(1); // Reset to first page on filter change
    };
 
    const getChartData = (filteredData) => {
@@ -118,14 +117,53 @@ const OrderHistory = () => {
       setIsBillModalOpen(true);
    }
 
-   const filteredData = filterData(data);
-   const totalPrice = calculateTotalPrice(filteredData);
+   const formatDate = (dateString) => {
+      return new Date(dateString).toLocaleDateString();
+   };
 
+   const paginateData = (filteredData) => {
+      const indexOfLastItem = currentPage * itemsPerPage;
+      const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+      return filteredData.slice(indexOfFirstItem, indexOfLastItem);
+   };
+
+   const Pagination = ({ totalPages, currentPage, onPageChange }) => (
+      <div className="flex justify-center my-4">
+         <button
+            onClick={() => onPageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+            className="mx-1 px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
+         >
+            Previous
+         </button>
+         {Array.from({ length: totalPages }, (_, index) => (
+            <button
+               key={index}
+               onClick={() => onPageChange(index + 1)}
+               className={`mx-1 px-3 py-1 ${currentPage === index + 1 ? 'bg-blue-500 text-white' : 'bg-gray-200'} rounded`}
+            >
+               {index + 1}
+            </button>
+         ))}
+         <button
+            onClick={() => onPageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className="mx-1 px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
+         >
+            Next
+         </button>
+      </div>
+   );
+
+   const filteredData = filterData(data);
+   const paginatedData = paginateData(filteredData);
+   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+   const totalPrice = calculateTotalPrice(paginatedData);
 
    return (
       <div className="container py-3">
          <div className="px-3 pt-2 pb-5 bg-gray-100 h-screen">
-            <h1 className="text-3xl font-bold font-serif mt-2 text-center text-teal-600  py-2 px-6 ">
+            <h1 className="text-3xl font-bold font-serif mt-2 text-center text-teal-600 py-2 px-6">
                Order History
             </h1>
             <div data-aos="fade-up">
@@ -145,7 +183,7 @@ const OrderHistory = () => {
                   </p>
                </div>
                {filteredData.length === 0 ? (
-                  <p className="text-3xl font-bold font-serif mt-2 text-center text-red-600  py-2 px-6">No data available</p>
+                  <p className="text-3xl font-bold font-serif mt-2 text-center text-red-600 py-2 px-6">No data available</p>
                ) : (
                   <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start mt-4">
                      <div className="flex justify-center items-center h-[35vh] w-full lg:w-2/5 p-4 bg-white shadow-md rounded-lg">
@@ -165,7 +203,7 @@ const OrderHistory = () => {
                               </tr>
                               </thead>
                               <tbody>
-                                 {filteredData.map((item) => (
+                                 {paginatedData.map((item) => (
                                     <tr key={item._id} className="hover:bg-gray-100">
                                        <td className="py-2 px-4 border-b text-start">
                                           {formatDate(item.timestamp)}
@@ -191,6 +229,11 @@ const OrderHistory = () => {
                                  ))}
                               </tbody>
                            </table>
+                           <Pagination
+                              totalPages={totalPages}
+                              currentPage={currentPage}
+                              onPageChange={setCurrentPage}
+                           />
                         </div>
                      </div>
                   </div>
