@@ -60,13 +60,15 @@ const ProfileEdit = ({ isOpen, onClose, onSubmit, adminDetails, handleInputChang
                   </div>
 
                   <div className="w-full md:w-1/2 px-4">
-                     <label className="block text-gray-700 font-semibold font-serif mb-2">Upload QR Code</label>
-                     <input
-                        type="file"
-                        name="qrCodeImageUrl"
-                        onChange={onImageChange}
-                        className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
-                     />
+                  <label className="block text-gray-700 font-semibold font-serif mb-2">UPI ID</label>
+                        <input
+                           type="text"
+                           name="upiId"
+                           value={adminDetails.upiId}
+                           onChange={handleInputChange}
+                           className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                           placeholder='UPI NOT SET'
+                        />
                   </div>
 
                   <div className="w-full px-4">
@@ -95,7 +97,7 @@ const ProfileEdit = ({ isOpen, onClose, onSubmit, adminDetails, handleInputChang
                      </div>
                   </div>
 
-                  <div className="flex justify-around items-center w-full">
+                  {/* <div className="flex justify-around items-center w-full">
                      <div className="w-full md:w-1/2 px-4 mb-4">
                         <label className="block text-gray-700 font-semibold font-serif mb-2">UPI ID</label>
                         <input
@@ -106,8 +108,7 @@ const ProfileEdit = ({ isOpen, onClose, onSubmit, adminDetails, handleInputChang
                            className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                         />
                      </div>
-                  </div>
-
+                  </div> */}
 
 
 
