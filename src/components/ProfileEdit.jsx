@@ -112,7 +112,6 @@ const ProfileEdit = ({ isOpen, onClose, onSubmit, adminDetails, handleInputChang
 
 
 
-
                </div>
                <div className="flex justify-end mt-4">
                   <button
