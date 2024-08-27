@@ -39,7 +39,6 @@ function HomePage() {
    const [billSlip, setBillSlip] = useState('');
    const [isBillModalOpen, setIsBillModalOpen] = useState(false);
    const { items, setItems } = useContext(ItemsContext);
-
    useEffect(() => {
       if (orderId) {
          fetchOrderDetails(orderId);
@@ -67,6 +66,7 @@ function HomePage() {
 
    const allItems = Object.values(items).flat();
 
+
    const filteredItems = allItems.filter(
       (item) =>
          item.productName.toLowerCase().includes(searchQuery.toLowerCase()) &&
@@ -89,6 +89,34 @@ function HomePage() {
          setOrderItems([...orderItems, { ...item, quantity: 1 }]);
       }
    };
+   const addToOrderincrease = (item) => {
+      setOrderItems((prevOrderItems) =>
+         prevOrderItems.map((orderItem) => {
+            if (orderItem.productName === item.productName) {
+               return {
+                  ...orderItem,
+                  quantity: orderItem.quantity + 1,
+               };
+            }
+            return orderItem;
+         })
+      );
+   };
+
+   const addToOrderdecrease = (item) => {
+      setOrderItems((prevOrderItems) =>
+         prevOrderItems.map((orderItem) => {
+            if (orderItem.productName === item.productName) {
+               return {
+                  ...orderItem,
+                  quantity: Math.max(orderItem.quantity - 1, 1),
+               };
+            }
+            return orderItem;
+         })
+      );
+   };
+
 
    const calculateTotal = () => {
       return orderItems.reduce(
@@ -125,7 +153,6 @@ function HomePage() {
    const closeModal = () => {
       setIsBillModalOpen(false);
    };
-
    return (
       <div className="flex flex-col h-screen">
          <main className="flex flex-grow bg-gray-200 p-4">
@@ -156,6 +183,8 @@ function HomePage() {
                   generateBillSlip={generateBillSlip}
                   removeFromOrder={removeFromOrder}
                   orderId={orderId}
+                  addToOrderincrease={addToOrderincrease}
+                  addToOrderdecrease={addToOrderdecrease}
                />
             </div>
          </main>

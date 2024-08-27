@@ -76,7 +76,7 @@ const Login = () => {
             <input
               type="text"
               name="emailOrMobile"
-              placeholder="Enter Your Email & Mobile No."
+              placeholder="Enter Your Email or Mobile No."
               onChange={handleChange}
               className="inputtext appearance-none border-2 border-gray-300 rounded-md bg-transparent py-2 px-4 mb-4 w-full focus:outline-none focus:border-[#000000d0]"
             />

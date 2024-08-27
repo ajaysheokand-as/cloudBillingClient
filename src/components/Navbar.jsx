@@ -28,13 +28,20 @@ const Navbar = () => {
     setIsLoggedOut(true);
   };
 
+  const handleLogoClick = () => {
+    if (registrationType === "restaurant") {
+      navigate("/table"); // Redirect to table page for restaurant
+    } else {
+      navigate("/home"); // Redirect to home page for other types
+    }
+  };
+
   useEffect(() => {
     if (isLoggedOut) {
       navigate("/");
       window.location.reload();
     }
   }, [isLoggedOut, navigate]);
-
 
   useEffect(() => {
     const type = localStorage.getItem("registrationType");
@@ -56,9 +63,9 @@ const Navbar = () => {
           >
             <i className="fas fa-bars"></i>
           </button>
-          <Link to="/home">
+          <button onClick={handleLogoClick} className="focus:outline-none">
             <img width={100} height={100} src={gif} alt="Logo" />
-          </Link>
+          </button>
         </div>
 
         {/* Right Section */}
@@ -122,7 +129,6 @@ const Navbar = () => {
                     width="30"
                   />
                 </Link>
-
 
                 {registrationType === "restaurant" && (
                   <Link to="/process" className="flex items-center space-x-2">
@@ -193,7 +199,6 @@ const Navbar = () => {
                         height="36"
                       />
                     </span>
-                    {/*<span>Call for Support</span>*/}
                     <span className="font-bold">9099012488</span>
                   </div>
                   <Link to="/add-product" className="flex items-center space-x-2">
@@ -214,7 +219,6 @@ const Navbar = () => {
                     />
                     <span>Order History</span>
                   </Link>
-
 
                   {registrationType === "restaurant" && (
                     <Link to="/process" className="flex items-center space-x-2">
@@ -253,4 +257,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default Navbar;
