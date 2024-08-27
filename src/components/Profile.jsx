@@ -209,6 +209,14 @@ const Profile = () => {
                   </div>
                </div>
 
+               <div data-aos="flip-up">
+                  <h1 className="mb-3 text-teal-600 font-bold text-2xl font-serif">UPI ID</h1>
+                  <h1 className="font-serif">
+                     {adminDetails.upiId}
+                  </h1>
+               </div>
+
+
                <div className="mb-4 md:mb-0 max-sm:flex justify-center" data-aos="flip-left">
                   <img
                      src={adminDetails.qrCodeImageUrl || QrCodeImg}
