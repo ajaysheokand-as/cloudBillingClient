@@ -63,6 +63,31 @@ const AddProduct = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+
+  // form validation
+    if (!formData.productName.trim()) {
+      toast.error("Product name is required!");
+      setIsSubmitting(false);
+      return;
+    }
+
+    if (formData.category === "Select" || !formData.category.trim()) {
+      toast.error("Please select a category of food!");
+      setIsSubmitting(false);
+      return;
+    }
+
+    if (!formData.price) {
+      toast.error("Product price is required!");
+      setIsSubmitting(false);
+      return;
+    }
+
+    if(isNaN(formData.price) || parseFloat(formData.price) <= 0){
+      toast.error("Price must be a positive number!");
+      setIsSubmitting(false);
+      return
+    }
     if (isUpdateMode) {
       try {
         await axios.put(`${baseUrl}product/${updateId}`, formData);
