@@ -14,7 +14,7 @@ const OrderHistory = () => {
    const [selectedOrder, setSelectedOrder] = useState(null);
    const [isBillModalOpen, setIsBillModalOpen] = useState(false);
    const [currentPage, setCurrentPage] = useState(1);
-   const [itemsPerPage, setItemsPerPage] = useState(5); // Number of items per page
+   const [itemsPerPage, setItemsPerPage] = useState(5); 
 
    useEffect(() => {
       AOS.init({
@@ -54,6 +54,13 @@ const OrderHistory = () => {
       let filteredData = data;
 
       switch (filter) {
+         case "Today":
+            filteredData = data.filter((item) => {
+               const itemDate = new Date(item.timestamp);
+               return (now - itemDate) / (1000 * 60 * 60 * 24) <= 1;
+            });
+            break;
+
          case "7 Days":
             filteredData = data.filter((item) => {
                const itemDate = new Date(item.timestamp);
@@ -173,6 +180,7 @@ const OrderHistory = () => {
                      className="form-select w-[200px] p-2 border border-gray-300 rounded-md shadow-sm"
                      onChange={handleFilterChange}
                   >
+                     <option>Today</option>
                      <option>7 Days</option>
                      <option>1 Month</option>
                      <option>3 Months</option>

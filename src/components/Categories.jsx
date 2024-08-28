@@ -191,6 +191,11 @@ const Categories = () => {
    const filterData = (data) => {
       const now = new Date();
       switch (filter) {
+         case "Today":
+            return data.filter((item) => {
+               const itemDate = new Date(item.timestamp);
+               return (now - itemDate) / (1000 * 60 * 60 * 24) <= 1;
+            });
          case "7 Days":
             return data.filter((item) => {
                const itemDate = new Date(item.timestamp);
@@ -249,6 +254,7 @@ const Categories = () => {
                      onChange={handleFilterChange}
                   >
                      <option>All Transactions</option>
+                     <option>Today</option>
                      <option>7 Days</option>
                      <option>1 Month</option>
                      <option>3 Months</option>
