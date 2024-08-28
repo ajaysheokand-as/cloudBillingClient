@@ -4,7 +4,7 @@ import { jwtDecode } from "jwt-decode";
 import { baseUrl } from "../utils/Const";
 import { QrCode } from "./QrCode";
 import { useBill } from "../context/BillContext";
-import { useGstDiscount } from "../context/GstDiscountContext"; // Import the context
+import { useGstDiscount } from "../context/GstDiscountContext";
 
 const BillModal = ({
    billingDetails,
@@ -14,7 +14,7 @@ const BillModal = ({
    shareOnWhatsApp,
    billIdOld,
 }) => {
-   const { discount, gst } = useGstDiscount(); // Use context
+   const { discount, gst } = useGstDiscount(); 
    const [userId, setUserId] = useState();
    const [rastroDetails, setRastroDetails] = useState({});
    const billRef = useRef(null);
@@ -139,20 +139,12 @@ const BillModal = ({
                      <p className="flex justify-between bill-total text-lg font-semibold mt-4">
                         <span>Sub Total :</span> <span>₹{calculateTotal()}</span>
                      </p>
-                     <div className="discount flex flex-col sm:flex-row sm:justify-between print:hidden">
-                        <div className="mt-2 sm:mt-0">
-                           <label className="font-semibold pl-1">
-                              Discount:
-                           </label>
-                           <span className="pl-1">{discount}%</span>
-                        </div>
-                        <div className="mt-2 sm:mt-0">
-                           <label className="font-semibold pl-1">
-                              GST (%):
-                           </label>
-                           <span className="pl-1">{gst}%</span>
-                        </div>
-                     </div>
+                     <p className="flex justify-between bill-total text-lg font-semibold">
+                        <span>Discount :</span> <span>₹{(calculateTotal() * (discount / 100)).toFixed(2)}</span>
+                     </p>
+                     <p className="flex justify-between bill-total text-lg font-semibold">
+                        <span>GST :</span> <span>₹{(totalWithDiscount * (gst / 100)).toFixed(2)}</span>
+                     </p>
 
                      <p className="flex justify-between bill-total text-xl font-bold mt-3 print:border-y-2 border-dashed border-gray-500 print:py-2">
                         <span>Total :</span> <span>₹{totalWithGST.toFixed(2)}</span>
