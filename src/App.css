@@ -4,6 +4,10 @@
    font-family: "Public Sans", sans-serif;
 }
 
+body{
+   padding-top: 50px;
+}
+
 .bill-slip {
    border: 1px solid #e2e8f0;
    border-radius: 8px;
@@ -110,11 +114,11 @@ input[type=number] {
 
    background-repeat: no-repeat, no-repeat;
 
-   background-size: 80vh, 80vh;
+   background-size: 80vh,80vh;
 
    background-position: top left, bottom right;
 
-   background-color: #f0f0f0;
+   /* background-color: #f0f0f0; */
 }
 
 @media (max-width: 768px) {
@@ -144,7 +148,7 @@ input[type=number] {
 
    background-position: top left, bottom right;
 
-   background-color: #f0f0f0;
+   /* background-color: #f0f0f0; */
 }
 
 @media (max-width: 768px) {
