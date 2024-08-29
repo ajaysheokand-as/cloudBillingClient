@@ -228,13 +228,13 @@ const OrderHistory = () => {
                                           {item.mobile}
                                        </td>
                                        <td className="py-2 px-4 border-b text-start">
-                                          {item.gst}%
+                                          {item.gst.toFixed(2)}%
                                        </td>
                                        <td className="py-2 px-4 border-b text-start">
-                                          {item.discount}%
+                                          {item.discount.toFixed(2)}%
                                        </td>
                                        <td className="py-2 px-4 border-b text-start">
-                                          ₹ {item.totalAmount}
+                                          ₹ {item.totalAmount.toFixed(2)}
                                        </td>
                                        <button className="flex mt-1 ml-3 items-center justify-center w-8 h-8 py-2 px-4 border border-gray-300 rounded hover:bg-sky-300"
                                           onClick={() => handleViewBill(item)}
