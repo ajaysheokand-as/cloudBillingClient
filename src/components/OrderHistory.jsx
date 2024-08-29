@@ -60,7 +60,6 @@ const OrderHistory = () => {
                return (now - itemDate) / (1000 * 60 * 60 * 24) <= 1;
             });
             break;
-
          case "7 Days":
             filteredData = data.filter((item) => {
                const itemDate = new Date(item.timestamp);
