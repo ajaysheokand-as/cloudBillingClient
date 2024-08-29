@@ -14,7 +14,7 @@ const OrderHistory = () => {
    const [selectedOrder, setSelectedOrder] = useState(null);
    const [isBillModalOpen, setIsBillModalOpen] = useState(false);
    const [currentPage, setCurrentPage] = useState(1);
-   const [itemsPerPage, setItemsPerPage] = useState(5); 
+   const [itemsPerPage, setItemsPerPage] = useState(5);
 
    useEffect(() => {
       AOS.init({
@@ -204,11 +204,13 @@ const OrderHistory = () => {
                                  <tr className="bg-gray-200">
                                     <th className="py-2 px-4 text-start border-b">Date</th>
                                     <th className="py-2 px-4 text-start border-b">Bill No.</th>
-                                 <th className="py-2 px-4 border-b text-start">Name</th>
+                                    <th className="py-2 px-4 border-b text-start">Name</th>
                                     <th className="py-2 px-4 border-b text-start">Mobile</th>
+                                    <th className="py-2 px-4 border-b text-start">gst</th>
+                                    <th className="py-2 px-4 border-b text-start">discount</th>
                                     <th className="py-2 px-4 border-b text-start">Total</th>
                                     <th className="py-2 px-4 border-b text-start">View Bill</th>
-                              </tr>
+                                 </tr>
                               </thead>
                               <tbody>
                                  {paginatedData.map((item) => (
@@ -217,23 +219,29 @@ const OrderHistory = () => {
                                           {formatDate(item.timestamp)}
                                        </td>
                                        <td className="flex items-center justify-center mr-4 py-2 px-4 border-b text-start">
-                                       {item.billId}
-                                    </td>
-                                    <td className="py-2 px-4 border-b text-start">
+                                          {item.billId}
+                                       </td>
+                                       <td className="py-2 px-4 border-b text-start">
                                           {item.name}
                                        </td>
                                        <td className="py-2 px-4 border-b text-start">
                                           {item.mobile}
                                        </td>
                                        <td className="py-2 px-4 border-b text-start">
+                                          {item.gst}%
+                                       </td>
+                                       <td className="py-2 px-4 border-b text-start">
+                                          {item.discount}%
+                                       </td>
+                                       <td className="py-2 px-4 border-b text-start">
                                           ₹ {item.totalAmount}
                                        </td>
                                        <button className="flex mt-1 ml-3 items-center justify-center w-8 h-8 py-2 px-4 border border-gray-300 rounded hover:bg-sky-300"
-                                       onClick={() => handleViewBill(item)}
-                                    >
-                                       <span className=" text-center text-lg">👁️</span>
-                                    </button>
-                                 </tr>
+                                          onClick={() => handleViewBill(item)}
+                                       >
+                                          <span className=" text-center text-lg">👁️</span>
+                                       </button>
+                                    </tr>
                                  ))}
                               </tbody>
                            </table>
@@ -253,6 +261,8 @@ const OrderHistory = () => {
                billingDetails={{
                   name: selectedOrder.name,
                   mobile: selectedOrder.mobile,
+                  gstAmount: selectedOrder.gst,
+                  discountAmount: selectedOrder.discount,
                }}
                billIdOld={selectedOrder.billId}
                orderItems={selectedOrder.orderItems}
