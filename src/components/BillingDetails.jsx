@@ -96,8 +96,8 @@ const BillingDetails = ({
     if (!orderItems || orderItems.length === 0) {
       toast.error("Add items to your order !!");
       return;
-    }   
-
+    }
+  
     const finalAmount = calculateFinalAmount();
     const billData = {
       name: billingDetails.name,
@@ -110,9 +110,11 @@ const BillingDetails = ({
       section,
       index,
       totalAmount: finalAmount,
+      gst,
+      discount,
       paymentMethod,
     };
-
+  
     try {
       if (orderId) {
         await axios.put(`${baseUrl}updateBill/${orderId}`, billData);
@@ -122,17 +124,14 @@ const BillingDetails = ({
         const Bill = response?.data?.bill
         setBillData(Bill);
         toast.success(`Order placed successfully! Bill ID: ${response.data.bill.billId}`);
-        
       }
       generateBillSlip();
-
-
     } catch (error) {
       toast.error("Error placing order!");
       console.error("Error placing order:", error);
     }
   };
-
+  
 
 
 
