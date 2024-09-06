@@ -15,6 +15,7 @@ import CustomTable from "./components/CustomTable";
 import Structure from "./components/Structure";
 import Process from "./components/Process";
 import RequireAuth from "./components/authentication/PrivateRoute";
+import BillView from "./components/BillView";
 
 function App() {
   return (
@@ -111,6 +112,7 @@ function App() {
             </RequireAuth>
           }
         />
+        <Route path="/bill/:orderId" element={<BillView />} />
       </Routes>
     </>
   );
