@@ -72,11 +72,11 @@ const Login = () => {
             {error && <p className="text-red-500 mb-2">{error}</p>}
             
             {/* Forgot Password Button */}
-            <div className="mb-4 text-right">
+            {/* <div className="mb-4 text-right">
               <Link to="/ForgotPassword" className="text-[blue] hover:underline">
                 Forgot Password?
               </Link>
-            </div>
+            </div> */}
 
             <button
               type="submit"
