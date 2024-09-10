@@ -146,7 +146,7 @@ const Profile = () => {
       <div className="container-fluid bg-gray-100 py-4 mb-6">
          <div className={`bg-white rounded-lg shadow-md mb-6 pb-2 transition ${isPopupOpen ? 'blur' : ''}`}>
             <div className='flex justify-end items-center pt-3 mr-5'>
-               <button className='text-2xl font-bold text-gray-700' onClick={handleEditClick} >Edit</button>
+               <button className='flex text-2xl font-bold bg-gray-200 px-1 rounded text-gray-700' onClick={handleEditClick} >Edit
                <img
                   className="cursor-pointer ml-2"
                   src={edit}
@@ -155,6 +155,7 @@ const Profile = () => {
                   title="Update Your Profile"
                   onClick={handleEditClick}
                />
+               </button>
             </div>
 
             <div className="flex max-md:block justify-around">
@@ -200,7 +201,7 @@ const Profile = () => {
             </div>
 
             <div className="flex justify-around items-center max-sm:block mt-4">
-               <div className="admin my-4 mr-32 ml-4 md:mb-0" data-aos="flip-right">
+               <div className="admin my-4 mr-32 ml-4 md:mb-0" data-aos="fade-right">
                   <div className="flex items-center max-sm:justify-center">
                      <h1 className="mb-2 text-teal-600 font-bold text-2xl font-serif">Admin</h1>
                   </div>
@@ -212,12 +213,14 @@ const Profile = () => {
                   </div>
                </div>
 
-               <div data-aos="flip-up " className='mr-40' >
+               <div data-aos="fade-left" className='mr-40' >
                   <h1 className="mb-3 text-teal-600 font-bold text-2xl font-serif">UPI ID</h1>
                   <h1 className="font-serif">
                      {adminDetails.upiId}
                   </h1>
                </div>
+            </div>
+               
 
 
                {/* <div className="mb-4 md:mb-0 max-sm:flex justify-center" data-aos="flip-left">
@@ -229,7 +232,7 @@ const Profile = () => {
                   />
                </div> */}
 
-            </div>
+            
 
          </div>
 
