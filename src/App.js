@@ -16,14 +16,24 @@ import Structure from "./components/Structure";
 import Process from "./components/Process";
 import RequireAuth from "./components/authentication/PrivateRoute";
 import BillView from "./components/BillView";
+import ForgotPassword from "./components/Login&Register/ForgotPassword";
+import ResetPasswordPage from "./components/Login&Register/ResetPasswordPage";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+import SuperAdminTable from "./components/Tables/SuperAdminTable";
+
 
 function App() {
   return (
     <>
       <Navbar />
+      <ToastContainer />
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/ForgotPassword" element={<ForgotPassword/>} />
+        <Route path="/reset-password/:token" element={<ResetPasswordPage/>} />
         <Route
           path="/home"
           element={
@@ -112,6 +122,14 @@ function App() {
             </RequireAuth>
           }
         />
+        <Route 
+        path="/superadmin"
+        element={
+          <RequireAuth>
+            <SuperAdminTable/>
+          </RequireAuth>
+        }
+        />  
         <Route path="/bill/:orderId" element={<BillView />} />
       </Routes>
     </>
