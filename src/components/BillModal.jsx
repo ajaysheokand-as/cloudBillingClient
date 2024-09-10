@@ -11,10 +11,9 @@ const BillModal = ({
     orderItems,
     calculateTotal,
     closeModal,
-    shareOnWhatsApp,
     billIdOld,
 }) => {
-    const { discount: contextDiscount, gst: contextGst } = useGstDiscount(); 
+    const { discount: contextDiscount, gst: contextGst } = useGstDiscount();
     const [userId, setUserId] = useState();
     const [rastroDetails, setRastroDetails] = useState({});
     const billRef = useRef(null);
@@ -25,7 +24,6 @@ const BillModal = ({
             try {
                 const response = await axios.get(`${baseUrl}user/${userId}`);
                 setRastroDetails(response.data);
-                console.log("UPI is this:", response.data.upiId);
             } catch (error) {
                 console.error("Error fetching user data:", error);
             }
@@ -37,7 +35,6 @@ const BillModal = ({
 
             if (decodedToken?.user?.id) {
                 const User = decodedToken.user.id;
-                console.log("User", User);
                 setUserId(User);
                 fetchUserData(User);
             } else {
@@ -50,8 +47,6 @@ const BillModal = ({
 
     const gst = billingDetails.gstAmount || contextGst || 0;
     const discount = billingDetails.discountAmount || contextDiscount || 0;
-    console.log("gst ", gst);
-    console.log("discount", discount);
 
     const subTotal = calculateTotal();
     const discountAmount = subTotal * (discount / 100);
@@ -70,6 +65,13 @@ const BillModal = ({
 
     const billIdToShow = billIdOld || billData?.billId;
 
+    const handleWhatsAppShare = () => {
+        const uniqueId = billData?._id;
+        const billUrl = `${window.location.origin}/bill/${uniqueId}`;
+        const whatsappUrl = `https://wa.me/?text=Your%20bill%20link:%20${encodeURIComponent(billUrl)}`;
+        window.open(whatsappUrl, '_blank');
+    };
+
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 overflow-y-auto">
             <div className="bg-white p-4 md:p-6 rounded shadow-md w-full max-w-[450px] mx-2 sm:mx-4">
@@ -77,7 +79,7 @@ const BillModal = ({
                     <div className="print:max-w-[250px] ">
                         <div className="bill">
                             <h2 className="text-center text-2xl font-bold">
-                                {rastroDetails.name}
+                                {rastroDetails.shop_type}
                             </h2>
                             <div className="address print:border-b-2 border-dotted border-gray-500 print:py-2">
                                 <p className="text-center ">
@@ -145,13 +147,12 @@ const BillModal = ({
                             </p>
                         </div>
 
-                        <div className="thanks my-3 text-center">
-                            <p className="text-xl">Thanks for visiting !!</p>
+                        <div className='thanks my-3 text-center'>
 
                             {rastroDetails.upiId && (
                                 <div className="mt-4">
-                                    <QrCode upiDetails={rastroDetails.upiId} totalAmount={totalWithGST} />
-                                    <p className="text-lg">Scan to pay your bill</p>
+                                    <QrCode upiDetails={rastroDetails.upiId} totalAmount={totalWithGST.toFixed(2)} />
+                                    <p className='text-xl'>Thanks for visiting !!</p>
                                 </div>
                             )}
                         </div>
@@ -161,7 +162,7 @@ const BillModal = ({
                 <div className="flex flex-col sm:flex-row justify-between mt-4">
                     <button
                         className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mb-2 sm:mb-0 sm:mr-2"
-                        onClick={shareOnWhatsApp}
+                        onClick={handleWhatsAppShare}
                     >
                         Share on WhatsApp
                     </button>

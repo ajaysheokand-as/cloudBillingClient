@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
-import QrCodeImg from '../assets/images/Qrcode 1.png';
 import edit from "../assets/images/update-profile.gif";
 import emailIcon from "../assets/images/email.png";
 import { baseUrl } from '../utils/Const';
@@ -15,7 +14,7 @@ import 'aos/dist/aos.css';
 const Profile = () => {
    const [isPopupOpen, setIsPopupOpen] = useState(false);
    const [adminDetails, setAdminDetails] = useState({});
-
+   const [editDetails, setEditDetails] = useState({});
    const [userId, setUserId] = useState("");
    const [isSubmitting, setIsSubmitting] = useState(false);
    const [image, setImage] = useState("")
@@ -63,27 +62,31 @@ const Profile = () => {
    }, []);
 
    const handleEditClick = () => {
+      setEditDetails({ ...adminDetails });
       setIsPopupOpen(true);
    };
 
    const handleClosePopup = () => {
       setIsPopupOpen(false);
+      setEditDetails({ ...adminDetails });
    };
 
    const handleInputChange = (e) => {
       const { name, value } = e.target;
       const keys = name.split('.');
-      if (keys.length > 1) {
-         setAdminDetails(prevDetails => ({
-            ...prevDetails,
-            [keys[0]]: {
-               ...prevDetails[keys[0]],
-               [keys[1]]: value
-            }
-         }));
-      } else {
-         setAdminDetails({ ...adminDetails, [name]: value });
-      }
+      setEditDetails(prevDetails => {
+         if (keys.length > 1) {
+            return {
+               ...prevDetails,
+               [keys[0]]: {
+                  ...prevDetails[keys[0]],
+                  [keys[1]]: value
+               }
+            };
+         } else {
+            return { ...prevDetails, [name]: value };
+         }
+      });
    };
 
    const handleSubmit = async (e) => {
@@ -96,7 +99,7 @@ const Profile = () => {
             throw new Error('Token not found. Please log in.');
          }
 
-         let secureUrl = adminDetails.qrCodeImageUrl;
+         let secureUrl = editDetails.qrCodeImageUrl;
 
          if (image) {
             const formData = new FormData();
@@ -116,7 +119,7 @@ const Profile = () => {
          }
 
          const updatedAdminDetails = {
-            ...adminDetails,
+            ...editDetails,
             qrCodeImageUrl: secureUrl,
          };
 
@@ -161,7 +164,7 @@ const Profile = () => {
 
                   <div className=" max-sm:grid mt-2 justify-center">
                      <div className='flex items-center'>
-                        <h2 className="text-3xl font-semibold text-teal-600 font-serif">{adminDetails.name}</h2>
+                        <h2 className="text-3xl font-semibold text-teal-600 font-serif">{adminDetails.shop_type}</h2>
                      </div>
                      <p className="text-gray-800 font-serif font-bold flex items-center pt-2">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="32" height="32" className="mr-2">
@@ -235,7 +238,7 @@ const Profile = () => {
                isOpen={isPopupOpen}
                onClose={handleClosePopup}
                onSubmit={handleSubmit}
-               adminDetails={adminDetails}
+               editDetails={editDetails}
                handleInputChange={handleInputChange}
                onImageChange={handleImageChange}
                isSubmitting={isSubmitting}

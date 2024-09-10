@@ -97,7 +97,8 @@ const BillingDetails = ({
       toast.error("Add items to your order !!");
       return;
     }
-  
+
+    const subTotal = calculateTotal();
     const finalAmount = calculateFinalAmount();
     const billData = {
       name: billingDetails.name,
@@ -110,11 +111,12 @@ const BillingDetails = ({
       section,
       index,
       totalAmount: finalAmount,
+      subtotal: subTotal,
       gst,
       discount,
       paymentMethod,
     };
-  
+
     try {
       if (orderId) {
         await axios.put(`${baseUrl}updateBill/${orderId}`, billData);
@@ -131,7 +133,7 @@ const BillingDetails = ({
       console.error("Error placing order:", error);
     }
   };
-  
+
 
 
 
@@ -139,36 +141,36 @@ const BillingDetails = ({
     <> <ToastContainer />
 
       <div className="bill flex flex-col md:w-1/3 w-full xl:w-1/3 lg:w-1/3 bg-white px-4 pt-2 rounded shadow-md md:ml-4"
-          data-aos="fade-left">
+        data-aos="fade-left">
 
-          <p className="text-lg text-teal-600 font-bold font-serif mb-4">Billing Details</p>
-          <div className="flex flex-col space-y-4 mb-4">
-            <div className="flex items-center">
-              <label className="w-1/4 text-right pr-4 xl:block hidden">Name:</label>
-              <input
-                type="text"
-                name="name"
-                placeholder="Enter name..."
-                value={billingDetails.name}
-                onChange={handleBillingChange}
-                className="border border-gray-400 rounded px-2 py-1 flex-grow"
-                required
-              />
-            </div>
-            <div className="flex items-center">
-              <label className="w-1/4 text-right pr-4 xl:block hidden">Mobile:</label>
-              <input
-                type="tel"
-                name="mobile"
-                placeholder="Enter Mobile No..."
-                value={billingDetails.mobile}
-                onChange={handleBillingChange}
-                className="border border-gray-400 rounded px-2 py-1 flex-grow"
-                required
-              />
-            </div>
-
+        <p className="text-lg text-teal-600 font-bold font-serif mb-4">Billing Details</p>
+        <div className="flex flex-col space-y-4 mb-4">
+          <div className="flex items-center">
+            <label className="w-1/4 text-right pr-4 xl:block hidden">Name:</label>
+            <input
+              type="text"
+              name="name"
+              placeholder="Enter name..."
+              value={billingDetails.name}
+              onChange={handleBillingChange}
+              className="border border-gray-400 rounded px-2 py-1 flex-grow"
+              required
+            />
           </div>
+          <div className="flex items-center">
+            <label className="w-1/4 text-right pr-4 xl:block hidden">Mobile:</label>
+            <input
+              type="tel"
+              name="mobile"
+              placeholder="Enter Mobile No..."
+              value={billingDetails.mobile}
+              onChange={handleBillingChange}
+              className="border border-gray-400 rounded px-2 py-1 flex-grow"
+              required
+            />
+          </div>
+
+        </div>
         <p className="text-lg font-bold mb-4 text-teal-600 font-serif">Order Summary</p>
         <div className="overflow-x-auto overflow-auto max-h-[500px] example">
           <table className="min-w-full divide-y divide-gray-200">
@@ -267,7 +269,7 @@ const BillingDetails = ({
 
           {paymentMethod === "UPI" && upiDetails && (
             <div className="flex justify-center items-center my-4">
-              <QrCode upiDetails={upiDetails} totalAmount={calculateTotal()} />
+              <QrCode upiDetails={upiDetails} totalAmount={calculateFinalAmount().toFixed(2)} />
             </div>
           )}
 
