@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ProfileEdit = ({ isOpen, onClose, onSubmit, adminDetails, handleInputChange, onImageChange, isSubmitting }) => {
+const ProfileEdit = ({ isOpen, onClose, onSubmit, editDetails, handleInputChange, isSubmitting }) => {
    return (
       <div className={`fixed inset-0 z-50 ${isOpen ? 'flex' : 'hidden'} items-center justify-center overflow-auto`}>
          <div className="absolute inset-0 bg-gray-600 bg-opacity-50"></div>
@@ -12,8 +12,8 @@ const ProfileEdit = ({ isOpen, onClose, onSubmit, adminDetails, handleInputChang
                      <label className="block text-gray-700 font-semibold font-serif mb-2">Rastaurant's Name</label>
                      <input
                         type="text"
-                        name="name"
-                        value={adminDetails.name}
+                        name="shop_type"
+                        value={editDetails.shop_type}
                         onChange={handleInputChange}
                         className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                      />
@@ -23,7 +23,7 @@ const ProfileEdit = ({ isOpen, onClose, onSubmit, adminDetails, handleInputChang
                      <input
                         type="text"
                         name="address"
-                        value={adminDetails.address}
+                        value={editDetails.address}
                         onChange={handleInputChange}
                         className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                      />
@@ -33,7 +33,7 @@ const ProfileEdit = ({ isOpen, onClose, onSubmit, adminDetails, handleInputChang
                      <input
                         type="text"
                         name="owner"
-                        value={adminDetails.owner}
+                        value={editDetails.owner}
                         onChange={handleInputChange}
                         className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                      />
@@ -43,7 +43,7 @@ const ProfileEdit = ({ isOpen, onClose, onSubmit, adminDetails, handleInputChang
                      <input
                         type="text"
                         name="mobile"
-                        value={adminDetails.mobile}
+                        value={editDetails.mobile}
                         onChange={handleInputChange}
                         className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                      />
@@ -53,7 +53,7 @@ const ProfileEdit = ({ isOpen, onClose, onSubmit, adminDetails, handleInputChang
                      <input
                         type="email"
                         name="email"
-                        value={adminDetails.email}
+                        value={editDetails.email}
                         onChange={handleInputChange}
                         className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                      />
@@ -64,7 +64,7 @@ const ProfileEdit = ({ isOpen, onClose, onSubmit, adminDetails, handleInputChang
                         <input
                            type="text"
                            name="upiId"
-                           value={adminDetails.upiId}
+                           value={editDetails.upiId}
                            onChange={handleInputChange}
                            className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                            placeholder='UPI NOT SET'
@@ -79,7 +79,7 @@ const ProfileEdit = ({ isOpen, onClose, onSubmit, adminDetails, handleInputChang
                            <input
                               type="text"
                               name="openingHours.mondayFriday"
-                              value={adminDetails.openingHours?.mondayFriday}
+                              value={editDetails.openingHours?.mondayFriday}
                               onChange={handleInputChange}
                               className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                            />
@@ -89,7 +89,7 @@ const ProfileEdit = ({ isOpen, onClose, onSubmit, adminDetails, handleInputChang
                            <input
                               type="text"
                               name="openingHours.saturdaySunday"
-                              value={adminDetails.openingHours?.saturdaySunday}
+                              value={editDetails.openingHours?.saturdaySunday}
                               onChange={handleInputChange}
                               className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                            />
@@ -103,7 +103,7 @@ const ProfileEdit = ({ isOpen, onClose, onSubmit, adminDetails, handleInputChang
                         <input
                            type="text"
                            name="upiId"
-                           value={adminDetails.upiId}
+                           value={editDetails.upiId}
                            onChange={handleInputChange}
                            className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                         />
