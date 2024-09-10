@@ -155,7 +155,9 @@ const Register = () => {
                      >
                         <option className="select-dropdown" value="">Select Type</option>
                         <option className="select-dropdown" value="restaurant">Restaurant</option>
-                        <option className="select-dropdown" value="store">Store</option>
+                        <option className="select-dropdown" value="store">Store</option> 
+                        
+                     
                      </select>
                   </div>
 
