@@ -12,6 +12,7 @@ const BillModal = ({
     calculateTotal,
     closeModal,
     billIdOld,
+    wtspId,
 }) => {
     const { discount: contextDiscount, gst: contextGst } = useGstDiscount();
     const [userId, setUserId] = useState();
@@ -66,7 +67,7 @@ const BillModal = ({
     const billIdToShow = billIdOld || billData?.billId;
 
     const handleWhatsAppShare = () => {
-        const uniqueId = billData?._id;
+        const uniqueId = wtspId || billData?._id;
         const billUrl = `${window.location.origin}/bill/${uniqueId}`;
         const whatsappUrl = `https://wa.me/?text=Your%20bill%20link:%20${encodeURIComponent(billUrl)}`;
         window.open(whatsappUrl, '_blank');
@@ -136,10 +137,10 @@ const BillModal = ({
                                 <span>Sub Total:</span> <span>₹{subTotal}</span>
                             </p>
                             <p className="flex justify-between bill-total text-lg font-semibold">
-                                <span>Discount:</span> <span>₹{discountAmount.toFixed(2)}</span>
+                                <span>Discount ({discount}%):</span> <span>₹{discountAmount.toFixed(2)}</span>
                             </p>
                             <p className="flex justify-between bill-total text-lg font-semibold">
-                                <span>GST:</span> <span>₹{gstAmount.toFixed(2)}</span>
+                                <span>GST ({gst}%):</span> <span>₹{gstAmount.toFixed(2)}</span>
                             </p>
 
                             <p className="flex justify-between bill-total text-xl font-bold mt-3 print:border-y-2 border-dashed border-gray-500 print:py-2">

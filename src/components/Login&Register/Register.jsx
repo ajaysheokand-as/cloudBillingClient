@@ -112,11 +112,11 @@ const Register = () => {
 
          console.log("Error", error);
          if (error.response.status == 400) {
-            toast.warning("Email already exixts")
+            toast.warning("Email already exists")
          }
 
          if (error.response.status == 401) {
-            toast.warning("Mobile Number already exixts")
+            toast.warning("Mobile Number already exists")
          }
       }
       setIsSubmitting(false);
