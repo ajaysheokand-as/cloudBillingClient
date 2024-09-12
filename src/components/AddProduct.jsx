@@ -64,7 +64,7 @@ const AddProduct = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-  // form validation
+    // form validation
     if (!formData.productName.trim()) {
       toast.error("Product name is required!");
       setIsSubmitting(false);
@@ -83,7 +83,7 @@ const AddProduct = () => {
       return;
     }
 
-    if(isNaN(formData.price) || parseFloat(formData.price) <= 0){
+    if (isNaN(formData.price) || parseFloat(formData.price) <= 0) {
       toast.error("Price must be a positive number!");
       setIsSubmitting(false);
       return
@@ -209,7 +209,7 @@ const AddProduct = () => {
   };
 
   return (
-    <div className="container-fluid mx-auto px-4 max-[375px]:px-0">
+    <div className="container-fluid mt-4 mx-auto px-4 max-[375px]:px-0">
       <ToastContainer />
       <h1 className="text-3xl font-bold mt-1 text-center font-serif text-teal-600 bg-200 py-1 px-6">
         Add Products
@@ -222,63 +222,58 @@ const AddProduct = () => {
           className="form-column bg-gray-100 w-full mt-3 rounded-lg pt-2 md:w-1/3 md:px-3 max-[767px]:grid justify-center"
           data-aos="fade-right"
         >
-          <div className="mb-0 flex flex-wrap justify-evenly">
-            <div className="input-group block md:inline-block md:w-5/12">
-              <label
-                htmlFor="productName"
-                className="block font-medium text-gray-700"
-              >
+          <div className="mb-0 flex w-full px-4 justify-evenly">
+            <div className="input-group block md:w-1/2 pr-2">
+              <label htmlFor="productName" className="block font-medium text-gray-700">
                 Product Name
               </label>
               <input
                 type="text"
                 id="productName"
-                className="form-input mt-1 w-full p-1"
+                className="form-input mt-1 w-full p-2"
                 value={formData.productName}
                 onChange={handleChange}
               />
             </div>
 
-            <div className="mb-3">
-            <div className="flex justify-between">
-              <label
-                htmlFor="category"
-                className="block font-medium text-gray-700"
+            <div className="block md:w-1/2 pl-2">
+              <div className="flex justify-between">
+                <label htmlFor="category" className="block font-medium text-gray-700">
+                  Category
+                </label>
+                <Link to="/categories">
+                  <svg
+                    className="w-6 h-6 text-teal-600 mr-1"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4.243a1 1 0 1 0-2 0V11H7.757a1 1 0 1 0 0 2H11v3.243a1 1 0 1 0 2 0V13h3.243a1 1 0 1 0 0-2H13V7.757Z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </Link>
+              </div>
+              <select
+                id="category"
+                className="form-select mt-1 w-full p-2"
+                value={formData.category}
+                onChange={handleChange}
               >
-                Category of Food
-              </label>
-              <Link to="/categories">
-                <svg
-                  className="w-6 h-6 text-teal-600 mr-1"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4.243a1 1 0 1 0-2 0V11H7.757a1 1 0 1 0 0 2H11v3.243a1 1 0 1 0 2 0V13h3.243a1 1 0 1 0 0-2H13V7.757Z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-              </Link>
+                <option>Select</option>
+                {category.map((cat) => (
+                  <option key={cat._id} value={cat.newTitle}>
+                    {cat.newTitle}
+                  </option>
+                ))}
+              </select>
             </div>
-            <select
-              id="category"
-              className="form-select mt-1 w-full p-1 "
-              value={formData.category}
-              onChange={handleChange}
-            >
-              <option>Select</option>
-              {category.map((cat) => (
-                <option key={cat._id} value={cat.newTitle}>
-                  {cat.newTitle}
-                </option>
-              ))}
-            </select>
-          </div>
+
           </div>
           <div className="flex flex-wrap justify-evenly -mt-2">
             <div className="input-group w-full md:w-5/12">
@@ -377,8 +372,8 @@ const AddProduct = () => {
               {isSubmitting
                 ? "Processing..."
                 : isUpdateMode
-                ? "Update"
-                : "Submit"}
+                  ? "Update"
+                  : "Submit"}
             </button>
           </div>
         </div>
@@ -465,7 +460,7 @@ const AddProduct = () => {
             {/* Pagination controls */}
             <div className="flex justify-center mt-4">
               <button
-              type="button"
+                type="button"
                 onClick={() => handlePageChange(currentPage - 1)}
                 disabled={currentPage === 1}
                 className="mx-2 px-4 py-2  text-gray-500 border rounded "
@@ -474,20 +469,19 @@ const AddProduct = () => {
               </button>
               {[...Array(totalPages)].map((_, index) => (
                 <button
-                type="button"
+                  type="button"
                   key={index}
                   onClick={() => handlePageChange(index + 1)}
-                  className={`mx-2 px-4 py-2 ${
-                    currentPage === index + 1
+                  className={`mx-2 px-4 py-2 ${currentPage === index + 1
                       ? "bg-blue-700 text-white"
                       : "bg-blue-500 text-white"
-                  } rounded hover:bg-blue-700`}
+                    } rounded hover:bg-blue-700`}
                 >
                   {index + 1}
                 </button>
               ))}
               <button
-              type="button"
+                type="button"
                 onClick={() => handlePageChange(currentPage + 1)}
                 disabled={currentPage === totalPages}
                 className="mx-2 px-4 py-2  text-gray-500 rounded border"

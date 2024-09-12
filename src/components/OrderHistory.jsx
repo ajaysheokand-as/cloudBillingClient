@@ -179,11 +179,11 @@ const OrderHistory = () => {
                      className="form-select w-[200px] p-2 border border-gray-300 rounded-md shadow-sm"
                      onChange={handleFilterChange}
                   >
+                     <option>All Transactions</option>
                      <option>Today</option>
                      <option>7 Days</option>
                      <option>1 Month</option>
                      <option>3 Months</option>
-                     <option>All Transactions</option>
                   </select>
                   <p className="text-lg font-semibold">
                      Total Price is: <span className="text-blue-600">₹ {totalPrice.toFixed(2)}</span>
@@ -227,13 +227,13 @@ const OrderHistory = () => {
                                           {item.mobile}
                                        </td>
                                        <td className="py-2 px-4 border-b text-start">
-                                          {item.gst.toFixed(2)}%
+                                          {(item?.gst*1).toFixed(2)}%
                                        </td>
                                        <td className="py-2 px-4 border-b text-start">
-                                          {item.discount.toFixed(2)}%
+                                          {(item?.discount*1).toFixed(2)}%
                                        </td>
                                        <td className="py-2 px-4 border-b text-start">
-                                          ₹ {item.totalAmount.toFixed(2)}
+                                          ₹{(item?.totalAmount*1).toFixed(2)}
                                        </td>
                                        <button className="flex mt-1 ml-3 items-center justify-center w-8 h-8 py-2 px-4 border border-gray-300 rounded hover:bg-sky-300"
                                           onClick={() => handleViewBill(item)}
@@ -264,6 +264,7 @@ const OrderHistory = () => {
                   discountAmount: selectedOrder.discount,
                }}
                billIdOld={selectedOrder.billId}
+               wtspId={selectedOrder._id}
                orderItems={selectedOrder.orderItems}
                calculateTotal={() => calculateTotalPrice([selectedOrder])}
                closeModal={() => setIsBillModalOpen(false)}

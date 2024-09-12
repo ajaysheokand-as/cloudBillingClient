@@ -102,7 +102,7 @@ const Process = () => {
                   {item.name}
                 </td>
                 <td className="px-6 py-4 border-b border-gray-300">
-                  {item.totalAmount + "₹"}
+                  {"₹"+item.totalAmount.toFixed(2)}
                 </td>
                 <td className="px-6 py-4 border-b border-gray-300">
                   <div className="flex">
