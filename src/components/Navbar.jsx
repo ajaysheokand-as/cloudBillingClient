@@ -102,14 +102,7 @@ const Navbar = () => {
                   </span>
                   <span className="font-bold">9876543210</span>
                 </div>
-                <Link to="/profile" className="flex items-center space-x-2">
-                  <img
-                    title="Profile"
-                    src={profile}
-                    alt="Profile Icon"
-                    width="30"
-                  />
-                </Link>
+                
                 <Link
                   to="/add-product"
                   className="flex items-center space-x-1 hover:text-red-600 transition duration-300"
@@ -147,6 +140,15 @@ const Navbar = () => {
                     src={admin}
                     alt="Admin Panel Icon"
                     width="28"
+                  />
+                </Link>
+
+                <Link to="/profile" className="flex items-center space-x-2">
+                  <img
+                    title="Profile"
+                    src={profile}
+                    alt="Profile Icon"
+                    width="30"
                   />
                 </Link>
 
