@@ -30,13 +30,13 @@ const AdminPanel = () => {
    }, []);
 
    return (
-      <div className=' container mx-auto '>
-         <div className=" px-4 py-4 my-3 bg-gray-100 adminepanel">
+      <div className='h-screen m-0'>
+         <div className="bg-gray-100 px-4 py-4 my-3 h-full">
             <h1 className="text-3xl font-bold font-serif mb-6 text-center text-teal-600 bg-200 py-2 px-6 ">
                Admin Panel
             </h1>
 
-            <div className="row gap-6 items-center justify-center">
+            <div className="gap-2 row items-center justify-center">
 
                {registrationType === "restaurant" && (
 
