@@ -35,7 +35,7 @@ const Login = () => {
       } else if(registrationType==='superadmin') {
         navigate("/superadmin");
       }else{
-        navigate('/table')
+        navigate('/home')
       }
     } catch (error) {
       setError("Invalid credentials");
