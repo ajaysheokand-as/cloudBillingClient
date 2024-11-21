@@ -29,6 +29,9 @@ const Navbar = () => {
   };
 
   const handleLogoClick = () => {
+    
+    !registrationType && setRegistrationType(localStorage.getItem("registrationType"));
+
     if (registrationType === "restaurant") {
       navigate("/table"); // Redirect to table page for restaurant
     } else {
@@ -47,11 +50,7 @@ const Navbar = () => {
     const type = localStorage.getItem("registrationType");
     setRegistrationType(type);
   }, []);
-
-  // Rohit's Modification for navbar
-
   
-
   return (
     <div>
       <nav className="bg-white w-full shadow-md py-1 px-4 flex items-center justify-between fixed top-0 z-40">

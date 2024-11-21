@@ -90,19 +90,19 @@ const Process = () => {
             {itemsToDisplay.map((item, index) => (
               <tr key={startIndex + index} className="hover:bg-gray-100">
                 <td className="px-6 py-4 border-b border-gray-300">
-                  {item.section + " " + item.index}
+                  {(item.section || "NA") + " " + (item.index || "NA")}
                 </td>
                 <td className="px-6 py-4 border-b border-gray-300">
                   {startIndex + index + 1}
                 </td>
                 <td className="px-6 py-4 border-b border-gray-300">
-                  {formatDate(item.timestamp)}
+                  {formatDate(item.timestamp) || "NA"}
                 </td>
                 <td className="px-6 py-4 border-b border-gray-300">
-                  {item.name}
+                  {item.name || "NA"}
                 </td>
                 <td className="px-6 py-4 border-b border-gray-300">
-                  {"₹"+item.totalAmount.toFixed(2)}
+                  {"₹"+item.totalAmount.toFixed(2)|| "NA"}
                 </td>
                 <td className="px-6 py-4 border-b border-gray-300">
                   <div className="flex">
