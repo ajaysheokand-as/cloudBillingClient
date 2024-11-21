@@ -354,16 +354,16 @@ const Categories = () => {
                         {currentCategoryesToShow.map((item, index) => (
                            <tr key={index}>
                               <td className="py-2 px-4 border-b text-start">
-                                 {item.srNo}
+                                 {item.srNo || "NA"}
                               </td>
                               <td className="py-2 px-4 border-b text-start">
-                                 {item.newTitle}
+                                 {item.newTitle || "NA"}
                               </td>
                               {/*<td className="py-2 px-4 border-b text-start">
                                  {item.newStatus}
                               </td>*/}
                               <td className="py-2 px-4 border-b text-start">
-                                 {item.newDescription}
+                                 {item.newDescription || "NA"}
                               </td>
                               <td className="py-2 px-4 border-b text-start">
                                  <div className="flex gap-3">

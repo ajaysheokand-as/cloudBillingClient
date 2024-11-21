@@ -276,6 +276,21 @@ const AddProduct = () => {
 
           </div>
           <div className="flex flex-wrap justify-evenly -mt-2">
+          <div className="input-group w-full md:w-5/12">
+              <label
+                htmlFor="price"
+                className="block font-medium text-gray-700"
+              >
+                Price
+              </label>
+              <input
+                type="number"
+                id="price"
+                className="form-input mt-1 h-7 w-full p-1"
+                value={formData.price}
+                onChange={handleChange}
+              />
+            </div>
             <div className="input-group w-full md:w-5/12">
               <label
                 htmlFor="type"
@@ -291,21 +306,7 @@ const AddProduct = () => {
                 onChange={handleChange}
               />
             </div>
-            <div className="input-group w-full md:w-5/12">
-              <label
-                htmlFor="price"
-                className="block font-medium text-gray-700"
-              >
-                Price
-              </label>
-              <input
-                type="number"
-                id="price"
-                className="form-input mt-1 h-7 w-full p-1"
-                value={formData.price}
-                onChange={handleChange}
-              />
-            </div>
+            
           </div>
           <div className="flex flex-wrap justify-evenly -mt-2">
             <div className="input-group w-full md:w-5/12 mb-4 md:mb-0">
@@ -319,13 +320,13 @@ const AddProduct = () => {
                 onChange={handleChange}
               >
                 <option>Select</option>
+                <option value="pieces">Pieces</option>
                 <option value="grams">Grams (g)</option>
                 <option value="kg">Kilograms (kg)</option>
                 <option value="mg">Milligrams (mg)</option>
                 <option value="pound">Pounds (lb)</option>
                 <option value="lit">Litres (l)</option>
                 <option value="ml">Milliliters (ml)</option>
-                <option value="pieces">Pieces</option>
                 <option value="dozens">Dozens</option>
                 <option value="cup">Cups</option>
               </select>
@@ -404,28 +405,28 @@ const AddProduct = () => {
                   currentItems.map((item, index) => (
                     <tr key={index}>
                       <td className="py-2 px-3 border-b text-start">
-                        {item.productid}
+                        {item.productid || "NA"}
                       </td>
                       <td className="py-2 px-3 border-b text-start">
-                        {item.productName}
+                        {item.productName || "NA"}
                       </td>
                       <td className="py-2 px-3 border-b text-start">
-                        {item.type}
+                        {item.type || "NA"}
                       </td>
                       <td className="py-2 px-3 border-b text-start">
-                        {item.category}
+                        {item.category || "NA"}
                       </td>
                       <td className="py-2 px-3 border-b text-start">
-                        {item.unit}
+                        {item.unit || "NA"}
                       </td>
                       <td className="py-2 px-3 border-b text-start">
-                        {item.stock}
+                        {item.stock || "NA"}
                       </td>
                       <td className="py-2 px-3 border-b text-start">
-                        {item.price}
+                        {item.price || "NA"}
                       </td>
                       <td className="py-2 px-3 border-b text-start">
-                        {item.description}
+                        {item.description || "NA"}
                       </td>
                       <td className="py-2 px-3 border-b text-start">
                         <div className="flex gap-3">

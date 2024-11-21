@@ -100,7 +100,7 @@ const Navbar = () => {
                   <span>
                     <img src={callIcon} alt="Call Icon" width="36" height="36" />
                   </span>
-                  <span className="font-bold">9876543210</span>
+                  <span className="font-bold">8570996916</span>
                 </div>
                 
                 <Link

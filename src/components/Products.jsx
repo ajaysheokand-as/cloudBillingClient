@@ -125,10 +125,10 @@ function Products() {
                <tbody className="text-gray-600 text-sm font-light">
                   {selectedProducts.map(category => (
                      <tr key={category._id} className="border-b border-gray-200 hover:bg-gray-100">
-                        <td className="px-4 py-2 text-left whitespace-nowrap">{category.category}</td>
-                        <td className="px-4 py-2 text-left">{category.productName}</td>
-                        <td className="px-4 py-2 text-left">{category.description}</td>
-                        <td className="px-4 py-2 text-left">{category.price} Rs.</td>
+                        <td className="px-4 py-2 text-left whitespace-nowrap">{category?.category || "NA"}</td>
+                        <td className="px-4 py-2 text-left">{category?.productName || "NA"}</td>
+                        <td className="px-4 py-2 text-left">{category?.description || "NA"}</td>
+                        <td className="px-4 py-2 text-left">{category?.price || 0} Rs.</td>
                         <td className="py-2 px-4 text-left">
                            <div className="flex gap-3">
                               <img
