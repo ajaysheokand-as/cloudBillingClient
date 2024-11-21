@@ -218,22 +218,22 @@ const OrderHistory = () => {
                                           {formatDate(item.timestamp)}
                                        </td>
                                        <td className="flex items-center justify-center mr-4 py-2 px-4 border-b text-start">
-                                          {item.billId}
+                                          {item.billId || "NA"}
                                        </td>
                                        <td className="py-2 px-4 border-b text-start">
-                                          {item.name}
+                                          {item.name || "NA"}
                                        </td>
                                        <td className="py-2 px-4 border-b text-start">
-                                          {item.mobile}
+                                          {item.mobile || "NA"}
                                        </td>
                                        <td className="py-2 px-4 border-b text-start">
-                                          {(item?.gst*1).toFixed(2)}%
+                                          {(item?.gst*1).toFixed(2) || 0}%
                                        </td>
                                        <td className="py-2 px-4 border-b text-start">
-                                          {(item?.discount*1).toFixed(2)}%
+                                          {(item?.discount*1).toFixed(2) || 0}%
                                        </td>
                                        <td className="py-2 px-4 border-b text-start">
-                                          ₹{(item?.totalAmount*1).toFixed(2)}
+                                          ₹{(item?.totalAmount*1).toFixed(2) || 0}
                                        </td>
                                        <button className="flex mt-1 ml-3 items-center justify-center w-8 h-8 py-2 px-4 border border-gray-300 rounded hover:bg-sky-300"
                                           onClick={() => handleViewBill(item)}

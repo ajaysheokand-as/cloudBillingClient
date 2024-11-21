@@ -349,19 +349,19 @@ const Expensises = () => {
                         {currentExpensesToShow.map((item, index) => (
                            <tr key={index}>
                               <td className="py-2 px-4 border-b text-start">
-                                 {item.srno}
+                                 {item.srno || "NA"}
                               </td>
                               <td className="py-2 px-4 border-b text-start">
-                                 {item.date}
+                                 {item.date || "NA"}
                               </td>
                               <td className="py-2 px-4 border-b text-start">
-                                 {item.title}
+                                 {item.title || "NA"}
                               </td>
                               <td className="py-2 px-4 border-b text-start">
-                                 {item.price}
+                                 {item.price || "NA"}
                               </td>
                               <td className="py-2 px-4 border-b text-start">
-                                 {item.description}
+                                 {item.description || "NA"}
                               </td>
                               <td className="py-2 px-4 border-b text-start">
                                  <div className="flex gap-3">
