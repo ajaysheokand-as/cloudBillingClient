@@ -25,13 +25,15 @@ import SuperAdminTable from "./components/Tables/SuperAdminTable";
 
 
 function App() {
+  const isBill = window.location.href.includes("/bill");
+  console.log("isBill=>", isBill)
   return (
     <>
-      <Navbar />
+      {!isBill && <Navbar />}
       <ToastContainer />
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/#/bill/:orderId" element={<BillView />} />
+        <Route path="/bill/:orderId" element={<BillView />} />
         <Route path="/register" element={<Register />} />
         <Route path="/ForgotPassword" element={<ForgotPassword/>} />
         <Route path="/reset-password/:token" element={<ResetPasswordPage/>} />

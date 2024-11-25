@@ -49,7 +49,7 @@ const BillView = () => {
    };
 
    if (!bill) {
-      return <div className="mt-50">Loading...</div>;
+      return <h1 className="mt-50 text-center h-1">Your Bill is Loading...</h1>;
    }
 
    return (
