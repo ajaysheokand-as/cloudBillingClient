@@ -31,6 +31,7 @@ function App() {
       <ToastContainer />
       <Routes>
         <Route path="/" element={<Login />} />
+        <Route path="/#/bill/:orderId" element={<BillView />} />
         <Route path="/register" element={<Register />} />
         <Route path="/ForgotPassword" element={<ForgotPassword/>} />
         <Route path="/reset-password/:token" element={<ResetPasswordPage/>} />
@@ -125,12 +126,11 @@ function App() {
         <Route 
         path="/superadmin"
         element={
-          // <RequireAuth>
+          <RequireAuth>
             <SuperAdminTable/>
-          // {/* </RequireAuth> */}
+          </RequireAuth>    
         }
         />  
-        <Route path="/bill/:orderId" element={<BillView />} />
       </Routes>
     </>
   );

@@ -146,7 +146,7 @@ function HomePage() {
    };
 
    const shareOnWhatsApp = () => {
-      const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(billSlip)}`;
+      const whatsappUrl = `https://wa.me/${billingDetails?.mobile}?text=${encodeURIComponent(billSlip)}`;
       window.open(whatsappUrl, '_blank');
    };
 

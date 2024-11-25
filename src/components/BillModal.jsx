@@ -68,8 +68,8 @@ const BillModal = ({
 
     const handleWhatsAppShare = () => {
         const uniqueId = wtspId || billData?._id;
-        const billUrl = `${window.location.origin}/bill/${uniqueId}`;
-        const whatsappUrl = `https://wa.me/?text=Your%20bill%20link:%20${encodeURIComponent(billUrl)}`;
+        const billUrl = `${window.location.origin}/#/bill/${uniqueId}`;
+        const whatsappUrl = `https://wa.me/${billingDetails?.mobile}?text=Your%20bill%20link:%20${encodeURIComponent(billUrl)}`;
         window.open(whatsappUrl, '_blank');
     };
 
