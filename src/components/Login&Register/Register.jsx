@@ -154,8 +154,8 @@ const Register = () => {
                         className="text appearance-none border-2 border-gray-300 rounded-md bg-transparent py-2 px-4 w-full focus:outline-none focus:border-[#000000d0] focus:ring-2 focus:ring-blue-200 focus:ring-opacity-50"
                      >
                         <option className="select-dropdown" value="">Select Type</option>
-                        <option className="select-dropdown" value="restaurant">Restaurant</option>
-                        <option className="select-dropdown" value="store">Store</option> 
+                        {/* <option className="select-dropdown" value="restaurant">Restaurant</option> */}
+                        <option className="select-dropdown" selected="selected" value="store">Store</option> 
                         
                      
                      </select>
