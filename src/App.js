@@ -26,7 +26,6 @@ import SuperAdminTable from "./components/Tables/SuperAdminTable";
 
 function App() {
   const isBill = window.location.href.includes("/bill");
-  console.log("isBill=>", isBill)
   return (
     <>
       {!isBill && <Navbar />}
